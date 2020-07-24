@@ -1,8 +1,6 @@
-MIT License
+The MIT License (MIT)
 
-Copyright (c) 2018,2020 Michael Phillips
-Britfone dictionary Copyright (c) 2015,2020 Jose Llarena
-Open dictionary Copyright (c) 2016,2020 dohliam
+Copyright (c) 2016 dohliam
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -3,7 +3,7 @@
 ### English to IPA (eng_to_ipa)
 
 
-This Python program utilizes the Carnegie-Mellon University Pronouncing Dictionary to convert English text into the [International Phonetic Alphabet](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet).
+This Python program utilizes the Carnegie-Mellon University Pronouncing Dictionary to convert American English or the Britfone Pronouncing Dictionary to convert British English text into the [International Phonetic Alphabet](https://en.wikipedia.org/wiki/International_Phonetic_Alphabet).
 
 ### Installation ### 
 
@@ -21,7 +21,22 @@ The `convert` function is used to take English text and convert it to IPA, like 
 'ðə kwɪk braʊn fɑks ʤəmpt ˈoʊvər ðə ˈleɪzi dɔg.'
 ``` 
 
-Note that words that cannot be found in the CMU dictionary are simply reprinted with an asterisk.
+Note that words that cannot be found in the dictionary are simply reprinted with an asterisk.
+
+
+#### Dictionaries
+
+* The CMU dictionary has 124999 entries in it as of July 2020
+* The Open Britfone dictionary has 65118 words from Open Dict and 16000 words from Britfone
+  * The top 10,000 most frequent words according to BNC and Google Web Corpus
+  * Proper nouns including all UK counties, London boroughs, major UK towns, European Capitals, US states, common irregular plurals and verbs
+  * Distributed under a MIT license
+  * Sources: https://github.com/JoseLlarena/Britfone and https://raw.githubusercontent.com/open-dict-data/ipa-dict/master/data/en_UK.txt
+
+
+#### Configuration
+
+
 
 #### `convert` parameters
 
