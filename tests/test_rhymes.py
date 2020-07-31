@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+
+# USAGE:
+# PYTHONPATH=".." python test_rhymes.py 
+
 from eng_to_ipa import rhymes
 import unittest
 

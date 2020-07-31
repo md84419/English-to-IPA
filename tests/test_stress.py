@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+
+# USAGE:
+# PYTHONPATH=".." python test_stress.py 
+
 from eng_to_ipa import stress, transcribe
 import unittest
 
