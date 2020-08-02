@@ -1,7 +1,9 @@
 # Script for converting the dictionary json file to an SQL table
+import ast
 import sqlite3
 import json
 import re
+import unittest
 from os.path import join, abspath, dirname
 
 conn1 = sqlite3.connect(join(abspath(dirname(__file__)), '..', 'eng_to_ipa', 'resources', 'en_GB.db'))
@@ -35,10 +37,21 @@ def insert_dictionary_values(tu):
     with open(join(abspath(dirname(__file__)), '..', 'eng_to_ipa', 'resources', f), encoding="UTF-8") as source_file:
         mydict = json.load( source_file )
         for word,phonemes in mydict.items():
-            phonemes = "{}".format( phonemes )
+            if( isinstance( phonemes, list )):
+                phonemes = str( phonemes )
             dictionary_data.append((word, phonemes))
     c.executemany("INSERT INTO dictionary(word, phonemes) VALUES (?, ?)", dictionary_data)
     conn.commit()
+
+    # test sanity - do we get out what we put in?
+    tc = unittest.TestCase()
+    testwords = ["aardvark", "teacher"]
+    for word in testwords:
+        t = mydict[word]
+        c.execute("SELECT phonemes FROM dictionary WHERE word = \"{0}\"".format(word) )
+        r = c.fetchone()[0]
+        r = ast.literal_eval( r )
+        tc.assertEqual( t, r )
 
 
 if __name__ == "__main__":
