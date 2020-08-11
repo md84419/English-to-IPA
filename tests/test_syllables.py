@@ -9,6 +9,9 @@ import unittest
 
 class TestConversion(unittest.TestCase):
     """Simple unit testing for the syllable functions."""
+    @classmethod
+    def setUpClass(self):
+        self.lang = None
 
     def test_count(self):
         test_string = "reflect respect recline reduce obsessively demonstrate baseball cloud brother cobblestone " + \

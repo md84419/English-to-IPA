@@ -9,6 +9,9 @@ import unittest
 
 class TestConversion(unittest.TestCase):
     """Simple unit testing for the stress functions."""
+    @classmethod
+    def setUpClass(self):
+        self.lang = None
 
     def test_stress_type(self):
         self.assertEqual(stress.stress_type("primary"), {"1": "ˈ"})

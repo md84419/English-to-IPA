@@ -13,6 +13,9 @@ test_case_2 = []
 
 class TestConversion(unittest.TestCase):
     """Simple unit testing for the rhymes function(s)."""
+    @classmethod
+    def setUpClass(self):
+        self.lang = None
 
     def test_rhymes(self):
         # with mode: sql
