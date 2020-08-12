@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 # USAGE:
-#  python opendict_to_json.py en_UK.txt > ../open_dict.json
+#  PYTHONPATH=".." python opendict_to_json.py ../eng_to_ipa/resources/Opendict_source_files/en_UK.txt > ../eng_to_ipa/resources/Open_dict.json
 
-import sys, getopt, subprocess, json, io
+import getopt, json, io, os, sys, subprocess
 from signal import signal, SIGPIPE, SIG_DFL
 from eng_to_ipa import tokenize
 
@@ -11,6 +11,11 @@ signal(SIGPIPE, SIG_DFL)
 
 debug  = False
 debug2 = False
+
+SYMBOLS_FILE1 = "opendict.symbols.txt"
+
+tokenize.configure( os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                         '..','eng_to_ipa','resources','Opendict_source_files',SYMBOLS_FILE1) )
 
 def main(argv):
   global debug, debug2
@@ -41,11 +46,6 @@ def main(argv):
     print( "{0}: syntax: [-d|-D] [-o output.json] input.txt".format( sys.argv[0]) )
     sys.exit(2)
   
-  #try:
-  #  dict_file = args[0]
-  #except IndexError:
-  #  print( "{0}: syntax: [-d|-D] en_UK.txt".format( sys.argv[0]) )
-  #  sys.exit(2)
 
   p_out = subprocess.check_output( ['awk', '-f', 'txt_to_json.awk', input_file] )
   
@@ -57,7 +57,8 @@ def main(argv):
     if( len( open_dict[key]) > 1 ):
       print( key )
     for idx in range( len( open_dict[key] ) ):
-      open_dict[key][idx] = tokenize( open_dict[key][idx] )
+      open_dict[key][idx] = fix_opendict( open_dict[key][idx] )
+      open_dict[key][idx] = tokenize.tokenize( open_dict[key][idx] )
     #if debug2: print( "{0} {1}".format( key, open_dict[key][0] ) )
   
   if( output_file != None ):
@@ -71,7 +72,18 @@ def main(argv):
   print( j )
   sys.exit(0)
 
-    
+def fix_opendict(source):
+  destination = source
+  # Replace obsolete IPA symbols with their modern alternatives
+  destination = destination.replace("ɹ", "r")
+  destination = destination.replace("ˈɛ", "ˈe")
+  destination = destination.replace("ˌɛ", "ˌe")
+  destination = destination.replace("ɛr", "eə")
+  destination = destination.replace("ˈɛː", "ˈeə")
+  destination = destination.replace("ˌɛː", "ˌeə")
+  destination = destination.replace("ɛː", "eə")
+  destination = destination.replace("ɛ", "e")
+  return destination
       
 if( __name__ == "__main__"):
   main(sys.argv[1:])

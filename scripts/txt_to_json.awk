@@ -1,7 +1,7 @@
 #!/bin/awk -f
 
 # USAGE:
-#   awk -f txt_to_json.awk en_UK.txt > ../Open_dict.json
+#   awk -f txt_to_json.awk ../eng_to_ipa/resources/Opendict_source_files/en_UK.txt > ../eng_to_ipa/resources/Open_dict.json
 
 BEGIN {
   FS="\t"

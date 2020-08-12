@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # USAGE:
-#  PYTHONPATH="../.." python create_en_US_dict.py
+#  PYTHONPATH=".." python create_en_US_dict.py > ../eng_to_ipa/resources/en_US.json
 
 import json, logging, os, re, subprocess, sys
 from signal import signal, SIGPIPE, SIG_DFL
@@ -20,21 +20,13 @@ def main(argv):
   us_dict = {}
   output_file = None
   
-  p_out = subprocess.check_output( ['awk', '-f', '../../scripts/normalize_json.awk', CMU_DICT] )
+  p_out = subprocess.check_output( ['awk', '-f', 'normalize_json.awk',
+                          os.path.join(os.path.abspath(os.path.dirname(__file__)),'..','eng_to_ipa','resources',CMU_DICT ) ] )
   
   cmu_dict = json.loads( p_out )
   
-  #words = "teacher".split()
-  #print( words )
-  #cmu = transcribe.get_cmu(words, db_type='sql')
-  #print( cmu )
-  #ipa = transcribe.cmu_to_ipa( cmu, stress_marking='both' )
-  #print( ipa[0][0] )
-  ##print( transcribe.cmu_to_ipa( ["a1 r d v aa2 r k"], stress_marking=True ) )
-  #sys.exit(2)
-  
   tokenize.configure( os.path.join(os.path.abspath(os.path.dirname(__file__)),
-                         'CMU_source_files',SYMBOLS_FILE) )
+                         '..','eng_to_ipa','resources','CMU_source_files',SYMBOLS_FILE) )
   
   for key in cmu_dict:
     #if debug2: print( open_dict[key][0] )
@@ -47,6 +39,8 @@ def main(argv):
       log.debug( "Input: {0}: {1}".format( key, cmu ) )
       ipa = transcribe.cmu_to_ipa( cmu, stress_marking='both' )
       log.debug( "Output: {0}".format( ipa ) )
+      # fix CMU dictionary
+      ipa[0][0] = fix_cmu( ipa[0][0] )
       cmu_dict[key][idx] = tokenize.tokenize( ipa[0][0] )
       
   j = json.dumps( cmu_dict, check_circular=True, indent=None, separators=[',', ': '], sort_keys=True, ensure_ascii=False )
@@ -54,6 +48,51 @@ def main(argv):
   j = re.sub(r"],", "],\n", j)
   j = re.sub(r"]}", "]\n}", j)
   print( j )
+
+def fix_cmu(source):
+  destination = source
+
+  # Use the correct symbol for primary stress marking
+  destination.replace( "'", "ˈ")
+
+  # Replace obsolete IPA ligatures with their modern digraph alternatives
+  destination = destination.replace("ʤ", "d‍ʒ")
+  destination = destination.replace("ʧ", "t‍ʃ")
+  destination = destination.replace("ɹ", "r")
+  destination = destination.replace("o", "ə")
+
+  # Use the standard (quantitative-qualitative) IPA notation scheme for vowels
+  # See section 5 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
+  destination = destination.replace("ɑ", "ɒ")
+  destination = destination.replace("i", "iː")
+  destination = destination.replace("ɔ", "ɔː")
+  destination = destination.replace("u", "uː")
+  destination = destination.replace("ːː", "ː")
+
+  # Undo Upton's scheme (Oxford dictionary)
+  # See section 7 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
+  # See also https://teflpedia.com/IPA_phoneme_/e%C9%99/ and related pages for the other symbols
+  destination = destination.replace("ɛr", "e‍ə")
+  destination = destination.replace("ɛː", "e‍ə")
+  destination = destination.replace("ɛ", "e")
+  # Note: we may need similar rules for a -> ae, əː -> ɜː, ʌɪ -> aɪ
+
+  #mark the diphthongs with the non-breaking space character
+  destination = destination.replace("aɪ", "a‍ɪ")
+  destination = destination.replace("aʊ", "a‍ʊ")
+  destination = destination.replace("dʒ", "d‍ʒ")
+  destination = destination.replace("eə", "e‍ə")
+  destination = destination.replace("eɪ", "e‍ɪ")
+  destination = destination.replace("iə", "i‍ə")
+  destination = destination.replace("tʃ", "t‍ʃ")
+  destination = destination.replace("ɔɪ", "ɔ‍ɪ")
+  destination = destination.replace("əl", "ə‍l")
+  destination = destination.replace("əʊ", "ə‍ʊ")
+  destination = destination.replace("ɛə", "ɛ‍ə")
+  destination = destination.replace("ɪə", "ɪ‍ə")
+  destination = destination.replace("ʊə", "ʊ‍ə")
+
+  return destination
   
 if( __name__ == "__main__"):
   main(sys.argv[1:])

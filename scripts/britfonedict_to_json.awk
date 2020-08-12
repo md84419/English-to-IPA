@@ -1,7 +1,7 @@
 #!/bin/awk -f
 
 # USAGE:
-#   awk -f csv_to_json.awk ../eng_to_ipa/resources/Britfone_source_files/britfone.main.3.0.1.csv > ../Britfone_dict.json
+#   awk -f csv_to_json.awk ../eng_to_ipa/resources/Britfone_source_files/britfone.main.3.0.1.csv > ../eng_to_ipa/resources/Britfone_dict.json
 
 BEGIN {
   FS=", "
