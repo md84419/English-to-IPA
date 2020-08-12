@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-import re
+import ast, copy, logging, os, re, sys
 from os.path import join, abspath, dirname
 import eng_to_ipa.stress as stress
 from collections import defaultdict
 
+logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO"))
+log = logging.getLogger(__name__)
 
 class ModeType(object):
 
@@ -12,12 +14,12 @@ class ModeType(object):
         if mode.lower() == "sql":
             import sqlite3
             conn = sqlite3.connect(join(abspath(dirname(__file__)),
-                                        "./resources/CMU_dict.db"))
+                                        "./resources/" + lang.dict + ".db"))
             self.mode = conn.cursor()
         elif mode.lower() == "json":
             import json
             with open(join(abspath(dirname(__file__)),
-                                  "../eng_to_ipa/resources/CMU_dict.json"),
+                                  "../eng_to_ipa/resources/" + lang.dict + ".json"),
                              encoding="UTF-8") as json_file:
               self.mode = json.load(json_file)
 
@@ -25,6 +27,36 @@ class ModeType(object):
         return self.name
 
 
+class Language(object):
+
+    def __init__(self, lang='cmu'):
+        self.lang = lang = lang.lower()
+        self.dict = ''
+        if lang == "cmu":
+            self.lang = 'en_US'
+            self.dict = 'CMU_dict'
+        elif lang == "en_us":
+            self.lang = 'en_US'
+            self.dict = 'en_US'
+        elif lang == "en_gb":
+            self.lang = 'en_GB'
+            self.dict = 'en_GB'
+        else:
+            log.error("Language '{0}' not recognised.".format( lang ))
+            sys.exit(2)
+
+    def __str__(self):
+        return self.lang
+
+        
+lang = Language()
+
+
+def set_language(language='cmu'):
+    global lang
+    if( language ):
+        lang = Language(language)
+    
 def preprocess(words):
     """Returns a string of words stripped of punctuation"""
     punct_str = '!"#$%&\'()*+,-./:;<=>/?@[\\]^_`{|}~«» '
@@ -78,7 +110,20 @@ def fetch_words(words_in, db_type="sql"):
         result = asset.fetchall()
         d = defaultdict(list)
         for k, v in result:
-            d[k].append(v)
+            if( lang.dict == 'CMU_dict'):
+                d[k].append(v)
+#            elif( lang.dict == 'CMU'):
+#                logging.error("### dict == 'CMU'")
+#                sys.exit(2)
+            else:
+#                try:
+                v = ast.literal_eval(v)
+                for val in v:
+                    d[k].append(val)
+#                except SyntaxError:
+#                    logging.error("*** {}.{}: word is {}, ipa is {}".format(db_type, lang.dict, k,ast.literal_eval(v)[0]))
+#                except TypeError:
+#                    logging.error("*** {}.{}: word is {}, ipa is {}".format(db_type, lang.dict, k,ast.literal_eval(v)[0]))
         return list(d.items())
     if db_type.lower() == "json":
         words = []
@@ -87,14 +132,20 @@ def fetch_words(words_in, db_type="sql"):
                 words.append((k, v))
         return words
 
-
 def get_cmu(tokens_in, db_type="sql"):
+    return get_entries(tokens_in, db_type, language='cmu')
+
+def get_entries(tokens_in, db_type="sql", language='cmu'):
     """query the SQL database for the words and return the phonemes in the order of user_in"""
+#    if( tokens_in == ast.literal_eval("['teacher']") or tokens_in == ast.literal_eval("['aardvark']")):
+#        logging.error("{}.{}: tokens in: {}".format(db_type, language, tokens_in))
     result = fetch_words(tokens_in, db_type)
     ordered = []
     for word in tokens_in:
         this_word = [[i[1] for i in result if i[0] == word]][0]
         if this_word:
+#            if( word == 'teacher' or word == 'aardvark'):
+#                logging.error("{}.{}: word is {}, ipa0 is {}, ipa1 is {}".format(db_type, language, word,this_word,this_word[0]))
             ordered.append(this_word[0])
         else:
             ordered.append(["__IGNORE__" + word])
@@ -103,6 +154,8 @@ def get_cmu(tokens_in, db_type="sql"):
 
 def cmu_to_ipa(cmu_list, mark=True, stress_marking='all'):
     """converts the CMU word lists into IPA transcriptions"""
+    if( lang.dict != 'CMU_dict' ):
+        return copy.deepcopy( cmu_list )
     symbols = {"a": "ə", "ey": "eɪ", "aa": "ɑ", "ae": "æ", "ah": "ə", "ao": "ɔ",
                "aw": "aʊ", "ay": "aɪ", "ch": "ʧ", "dh": "ð", "eh": "ɛ", "er": "ər",
                "hh": "h", "ih": "ɪ", "jh": "ʤ", "ng": "ŋ",  "ow": "oʊ", "oy": "ɔɪ",
@@ -176,8 +229,10 @@ def get_all(ipa_list):
     return sorted([sent[:-1] for sent in list_all])
 
 
-def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql"):
+def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", language='cmu'):
     """Returns a list of all the discovered IPA transcriptions for each word."""
+    global lang
+    lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
     cmu = get_cmu([w[1] for w in words], db_type=db_type)
@@ -189,6 +244,11 @@ def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql"):
 
 def isin_cmu(word, db_type="sql"):
     """checks if a word is in the CMU dictionary. Doesn't strip punctuation.
+    If given more than one word, returns True only if all words are present."""
+    return(isin_dict(word,db_type,'cmu'))
+    
+def isin_dict(word, db_type="sql", language='cmu'):
+    """checks if a word is in the dictionary. Doesn't strip punctuation.
     If given more than one word, returns True only if all words are present."""
     if type(word) == str:
         word = [preprocess(w) for w in word.split()]
@@ -207,13 +267,13 @@ def contains(ipa, db_type="sql"):
         return [list(res) for res in asset.fetchall()]
 
 
-def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql"):
+def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu'):
     """takes either a string or list of English words and converts them to IPA"""
     ipa = ipa_list(words_in=text, keep_punct=keep_punct,
-                   stress_marks=stress_marks, db_type=mode)
+                   stress_marks=stress_marks, db_type=mode, language=language)
     return get_all(ipa) if retrieve_all else get_top(ipa)
 
 
-def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both'):
+def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu'):
     """Forces use of JSON database for fetching phoneme data."""
-    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json")
+    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language)
