@@ -12,39 +12,31 @@ signal(SIGPIPE, SIG_DFL)
 logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger(__name__)
 
-symbols1 = []
-symbols2 = []
-symbols3 = []
+symbols_arr = {}
 
 
 def configure( config_file ):
-  global symbols1, symbols2, symbols3
+  global symbols_arr
   with open( config_file , "r") as symbols_fh:
     for line in symbols_fh:
       line = line.strip();
       l = len(line);
-      if l==1:
-        symbols1.append(line);
-      elif ( l == 2 ):
-        symbols2.append(line);
-      elif ( l == 3 ):
-        symbols3.append(line);
+      if l not in symbols_arr:
+        symbols_arr[l] = []
+      symbols_arr[l].append(line)
   symbols_fh.close();
   
 
 
 def tokenize( word ):
-  log.debug( symbols3 )
-  
   mylist = doubly_linked_list();
-  
   mylist.push( word )
-  while( mylist.tokenize( symbols3 ) ):
-    pass
-  while( mylist.tokenize( symbols2 ) ):
-    pass
-  while( mylist.tokenize( symbols1 ) ):
-    pass
+
+  for key in sorted(symbols_arr.keys(), reverse=True):
+    if key == 0:
+      continue
+    while( mylist.tokenize( symbols_arr[key] ) ):
+      pass
   return mylist.get()
 
 
@@ -94,7 +86,7 @@ class doubly_linked_list:
       if( current_node.prev is not None ):
         current_node.prev.next = NewNode
         current_node.prev = NewNode
-      if NewNode.data in symbols1 or NewNode.data in symbols2 or NewNode.data in symbols3:
+      if NewNode.data in symbols_arr:
         log.debug( "LHS {0} found in symbols".format( NewNode.data ) )
         NewNode.processed = True
   
@@ -110,7 +102,7 @@ class doubly_linked_list:
       if( current_node.next is not None ):
         current_node.next.prev = NewNode
       current_node.next = NewNode
-      if NewNode.data in symbols1 or NewNode.data in symbols2 or NewNode.data in symbols3:
+      if NewNode.data in symbols_arr:
         log.debug( "RHS {0} found in symbols".format( NewNode.data ) )
         NewNode.processed = True
         
