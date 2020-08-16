@@ -235,7 +235,7 @@ def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
-    cmu = get_cmu([w[1] for w in words], db_type=db_type)
+    cmu = get_entries([w[1] for w in words], db_type=db_type)
     ipa = cmu_to_ipa(cmu, stress_marking=stress_marks)
     if keep_punct:
         ipa = _punct_replace_word(words, ipa)
