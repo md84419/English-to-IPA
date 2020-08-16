@@ -172,16 +172,20 @@ def get_entries(tokens_in, db_type="sql", language='cmu'):
     return ordered
 
 
-def cmu_to_ipa(cmu_list, mark=True, stress_marking='all', sorted_list=True):
+def cmu_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
     """converts the CMU word lists into IPA transcriptions"""
+    return dict_to_ipa(dict_list, mark, stress_marking, sorted_list)
+
+def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
+    """converts the dictionary entries into eng-to-ipa format IPA transcriptions"""
     if( lang.dict != 'CMU_dict' ):
-        return copy.deepcopy( cmu_list )
+        return copy.deepcopy( dict_list )
     symbols = {"a": "ə", "ey": "eɪ", "aa": "ɑ", "ae": "æ", "ah": "ə", "ao": "ɔ",
                "aw": "aʊ", "ay": "aɪ", "ch": "ʧ", "dh": "ð", "eh": "ɛ", "er": "ər",
                "hh": "h", "ih": "ɪ", "jh": "ʤ", "ng": "ŋ",  "ow": "oʊ", "oy": "ɔɪ",
                "sh": "ʃ", "th": "θ", "uh": "ʊ", "uw": "u", "zh": "ʒ", "iy": "i", "y": "j"}
     final_list = []  # the final list of IPA tokens to be returned
-    for word_list in cmu_list:
+    for word_list in dict_list:
         ipa_word_list = []  # the word list for each word
         for word in word_list:
             if stress_marking:
@@ -258,8 +262,8 @@ def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
-    cmu = get_entries([w[1] for w in words], db_type=db_type)
-    ipa = cmu_to_ipa(cmu, stress_marking=stress_marks)
+    dct = get_entries([w[1] for w in words], db_type=db_type)
+    ipa = dict_to_ipa(dct, stress_marking=stress_marks)
     if keep_punct:
         ipa = _punct_replace_word(words, ipa)
     return ipa
