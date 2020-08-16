@@ -1,3 +1,8 @@
 .idea
 __pycache__/
 .pytest_cache/
+build/
+dist/
+unstaged
+unstaged/
+*.egg-info/
