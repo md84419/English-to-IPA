@@ -42,7 +42,7 @@ class BaseConversion(unittest.TestCase):
 
     def test_cmu_to_ipa_panagram(self):
         transcribe.set_language( self.lang )
-        res1 = transcribe.cmu_to_ipa( self.cmu3, stress_marking='both')
+        res1 = transcribe.cmu_to_ipa( self.cmu3, stress_marking='both', sorted_list=False)
         self.assertEqual(res1, self.ipa3)
         
 if __name__ == "__main__":

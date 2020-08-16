@@ -178,8 +178,6 @@ def cmu_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
 
 def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
     """converts the dictionary entries into eng-to-ipa format IPA transcriptions"""
-    if( lang.dict != 'CMU_dict' ):
-        return copy.deepcopy( dict_list )
     symbols = {"a": "ə", "ey": "eɪ", "aa": "ɑ", "ae": "æ", "ah": "ə", "ao": "ɔ",
                "aw": "aʊ", "ay": "aɪ", "ch": "ʧ", "dh": "ð", "eh": "ɛ", "er": "ər",
                "hh": "h", "ih": "ɪ", "jh": "ʤ", "ng": "ŋ",  "ow": "oʊ", "oy": "ɔɪ",
@@ -188,7 +186,7 @@ def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
     for word_list in dict_list:
         ipa_word_list = []  # the word list for each word
         for word in word_list:
-            if stress_marking:
+            if lang.dict == 'CMU_dict' and stress_marking:
                 word = stress.find_stress(word, type=stress_marking)
             else:
                 if re.sub(r"\d*", "", word.replace("__IGNORE__", "")) == "":
@@ -203,25 +201,28 @@ def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
                     if not re.sub(r"\d*", "", ipa_form) == "":
                         ipa_form += "*"
             else:
-                for piece in word.split(" "):
-                    marked = False
-                    unmarked = piece
-                    if piece[0] in ["ˈ", "ˌ"]:
-                        marked = True
-                        mark = piece[0]
-                        unmarked = piece[1:]
-                    if unmarked in symbols:
-                        if marked:
-                            ipa_form += mark + symbols[unmarked]
+                if lang.dict == 'CMU_dict':
+                    for piece in word.split(" "):
+                        marked = False
+                        unmarked = piece
+                        if piece[0] in ["ˈ", "ˌ"]:
+                            marked = True
+                            mark = piece[0]
+                            unmarked = piece[1:]
+                        if unmarked in symbols:
+                            if marked:
+                                ipa_form += mark + symbols[unmarked]
+                            else:
+                                ipa_form += symbols[unmarked]
                         else:
-                            ipa_form += symbols[unmarked]
-
-                    else:
-                        ipa_form += piece
-            swap_list = [["ˈər", "əˈr"], ["ˈie", "iˈe"]]
-            for sym in swap_list:
-                if not ipa_form.startswith(sym[0]):
-                    ipa_form = ipa_form.replace(sym[0], sym[1])
+                            ipa_form += piece
+                else:
+                    ipa_form += word
+            if lang.dict == 'CMU_dict':
+                swap_list = [["ˈər", "əˈr"], ["ˈie", "iˈe"]]
+                for sym in swap_list:
+                    if not ipa_form.startswith(sym[0]):
+                        ipa_form = ipa_form.replace(sym[0], sym[1])
             ipa_word_list.append(ipa_form)
         if sorted_list:
             final_list.append(sorted(list(OrderedDict.fromkeys(ipa_word_list))))
