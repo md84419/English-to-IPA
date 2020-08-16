@@ -13,7 +13,6 @@ logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO
 log = logging.getLogger(__name__)
 
 CMU_DICT      = 'CMU_dict.json'
-#CMU_DICT      = 'en_US.json'
 SYMBOLS_FILE = "cmu.symbols.txt"
 
 def main(argv):
@@ -29,20 +28,18 @@ def main(argv):
                          '..','eng_to_ipa','resources','CMU_source_files',SYMBOLS_FILE) )
   
   for key in cmu_dict:
-    #if debug2: print( open_dict[key][0] )
-    #print ( tokenize( open_dict[key][0] ) )
-    #mylist.print()
     if( len( cmu_dict[key]) > 1 ):
       log.debug( "MULTI: {0}".format( key ) )
-    for idx in range( len( cmu_dict[key] ) ):
-      cmu = [[cmu_dict[key][idx]]]
-      log.debug( "Input: {0}: {1}".format( key, cmu ) )
-      ipa = transcribe.cmu_to_ipa( cmu, stress_marking='both' )
-      log.debug( "Output: {0}".format( ipa ) )
+    log.debug( "Input: {0}: {1}".format( key, cmu_dict[key] ) )
+    ipa = transcribe.cmu_to_ipa( [cmu_dict[key]], stress_marking='both', sorted_list=False )
+    log.debug( "Output: {0}".format( ipa ) )
+    cmu_dict[key] = []
+    for idx in range( len( ipa[0] ) ):
       # fix CMU dictionary
-      ipa[0][0] = fix_cmu( ipa[0][0] )
-      cmu_dict[key][idx] = tokenize.tokenize( ipa[0][0] )
-      
+      ipa[0][idx] = fix_cmu( ipa[0][idx] )
+
+      cmu_dict[key].append( tokenize.tokenize( ipa[0][idx] ) )
+
   j = json.dumps( cmu_dict, check_circular=True, indent=None, separators=[',', ': '], sort_keys=True, ensure_ascii=False )
   j = re.sub(r"{", "{\n", j)
   j = re.sub(r"],", "],\n", j)
