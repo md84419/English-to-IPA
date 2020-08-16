@@ -30,7 +30,10 @@ class ModeType(object):
 class Language(object):
 
     def __init__(self, lang='cmu'):
-        self.lang = lang = lang.lower()
+        if lang:
+            self.lang = lang = lang.lower()
+        else:
+            self.lang = lang = 'cmu'
         self.dict = ''
         if lang == "cmu":
             self.lang = 'en_US'
