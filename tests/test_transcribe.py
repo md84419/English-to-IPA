@@ -96,8 +96,8 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         
         self.words3 = words3
 
-        self.cmu3 = self.ipa3 = [['ð ə', 'ð ə', 'ð iː'], ['b e‍ɪ ʒ'], ['h j uː'], ['ɒ n', 'ɔː n'], ['ð ə', 'ð ə', 'ð iː'], ['ˈw ɔː t ə r z'], ['ə v', 'ə v'], ['ð ə', 'ð ə', 'ð iː'],
-            ['l ɒ k'], ['ˌɪ m ˈp r e s t'], ['ɔː l'], ['ˌɪ n ˈk l uː d ɪ ŋ'], ['ð ə', 'ð ə', 'ð iː'], ['f r e n t‍ʃ'], ['k w iː n'], ['b ɪ ˈf ɔː r', 'ˌb iː ˈf ɔː r'], ['ʃ iː'], ['h ə r d'],
+        self.cmu3 = self.ipa3 = [['ð ə', 'ð iː'], ['b e‍ɪ ʒ'], ['h j uː'], ['ɒ n', 'ɔː n'], ['ð ə', 'ð iː'], ['ˈw ɔː t ə r z'], ['ə v'], ['ð ə', 'ð iː'],
+            ['l ɒ k'], ['ˌɪ m ˈp r e s t'], ['ɔː l'], ['ˌɪ n ˈk l uː d ɪ ŋ'], ['ð ə', 'ð iː'], ['f r e n t‍ʃ'], ['k w iː n'], ['b ɪ ˈf ɔː r', 'ˌb iː ˈf ɔː r'], ['ʃ iː'], ['h ə r d'],
             ['ð æ t', 'ð ə t'], ['ˈs ɪ m f ə n iː'], ['ə ˈg e n', 'ə ˈg e‍ɪ n'], ['d‍ʒ ə s t', 'd‍ʒ ɪ s t'], ['æ z', 'e z'], ['j ə ŋ'], ['ˈɒ r θ ə r'], ['ˈw ɔː n t ɪ d']]
             
         self.lang = 'en_US'

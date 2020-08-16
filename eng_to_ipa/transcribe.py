@@ -2,7 +2,7 @@
 import ast, copy, logging, os, re, sys
 from os.path import join, abspath, dirname
 import eng_to_ipa.stress as stress
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger(__name__)
@@ -199,7 +199,7 @@ def cmu_to_ipa(cmu_list, mark=True, stress_marking='all'):
                 if not ipa_form.startswith(sym[0]):
                     ipa_form = ipa_form.replace(sym[0], sym[1])
             ipa_word_list.append(ipa_form)
-        final_list.append(sorted(list(set(ipa_word_list))))
+        final_list.append(sorted(list(OrderedDict.fromkeys(ipa_word_list))))
     return final_list
 
 
