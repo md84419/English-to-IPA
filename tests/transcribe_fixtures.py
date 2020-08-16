@@ -33,6 +33,30 @@ class BaseConversion(unittest.TestCase):
         res1 = transcribe.cmu_to_ipa( self.cmu2, stress_marking='both')
         self.assertEqual(res1, self.ipa2)
 
+    def test_get_cmu_again(self):
+        res1 = transcribe.get_entries(self.words4, db_type='sql', language=self.lang)
+        res2 = transcribe.get_entries(self.words4, db_type='json', language=self.lang)
+        self.assertEqual(res1, self.cmu4)
+        self.assertEqual(res2, self.cmu4)
+        self.assertEqual(res1, res2)
+
+    def test_cmu_to_ipa_again(self):
+        transcribe.set_language( self.lang )
+        res1 = transcribe.cmu_to_ipa( self.cmu4, stress_marking='both', sorted_list=False)
+        self.assertEqual(res1, self.ipa4)
+
+    def test_get_cmu_the(self):
+        res1 = transcribe.get_entries(self.words5, db_type='sql', language=self.lang)
+        res2 = transcribe.get_entries(self.words5, db_type='json', language=self.lang)
+        self.assertEqual(res1, self.cmu5)
+        self.assertEqual(res2, self.cmu5)
+        self.assertEqual(res1, res2)
+
+    def test_cmu_to_ipa_the(self):
+        transcribe.set_language( self.lang )
+        res1 = transcribe.cmu_to_ipa( self.cmu5, stress_marking='both', sorted_list=False)
+        self.assertEqual(res1, self.ipa5)
+
     def test_get_cmu_panagram(self):
         res1 = transcribe.get_entries(self.words3, db_type='sql', language=self.lang)
         res2 = transcribe.get_entries(self.words3, db_type='json', language=self.lang)

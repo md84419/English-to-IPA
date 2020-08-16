@@ -39,6 +39,10 @@ class TestConversion(unittest.TestCase):
         self.assertEqual(stress.find_stress("d eh1 m ah0 n s t r ey2 t", type="primary"), 'ˈd eh m ah n s t r ey t')
         # test the retrieval of only secondary stress
         self.assertEqual(stress.find_stress("d eh1 m ah0 n s t r ey2 t", type="secondary"), 'd eh m ah n ˌs t r ey t')
+        # test the retrieval of both stress
+        self.assertEqual(stress.find_stress("dh ah0", type="both"), 'dh ah')
+        #self.assertEqual(stress.find_stress("dh ah1", type="both"), 'dh ˈah')  # CMU dict provides stress for single-syllable words, eng-to-ipa currently disregards
+        self.assertEqual(stress.find_stress("dh iy0", type="both"), 'dh iy')
 
 
 if __name__ == "__main__":

@@ -9,8 +9,25 @@ import sys
 
 words1 = "teacher".split()
 words2 = "aardvark".split()
+words4 = "again".split()
+words5 = "the".split()
 
-words3 = "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted"
+cmu1   = [['t iy1 ch er0']]
+cmu2   = [['aa1 r d v aa2 r k']]
+
+ipa4     = [['ə ˈg e n', 'ə ˈg e\u200dɪ n']]
+ipa4_CMU = [[
+        ipa4[0][0].replace(' ', '').replace('‍','').replace('en','ɛn'),
+        ipa4[0][1].replace(' ', '').replace('‍','')
+    ]]
+
+ipa5     = [['ð ə', 'ð iː']]
+ipa5_CMU = [[
+        ipa5[0][0].replace(' ', ''),
+        ipa5[0][1].replace(' ', '').replace('ː','')
+    ]]
+
+words3 = "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted."
 words3 = [transcribe.preserve_punc(w.lower())[0] for w in words3.split()]
 words3 = [w[1] for w in words3]
 
@@ -18,13 +35,21 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
     @classmethod
     def setUpClass(self):
         self.words1 = words1
-        self.cmu1 = [['t iy1 ch er0']]
+        self.cmu1 = cmu1
         self.ipa1 = [['ˈtiʧər']]
         
         self.words2 = words2
-        self.cmu2 = [['aa1 r d v aa2 r k']]
+        self.cmu2 = cmu2
         self.ipa2 = [['ˈɑrdˌvɑrk']]
         
+        self.words4 = words4
+        self.cmu4 = [['ah0 g eh1 n', 'ah0 g ey1 n']]
+        self.ipa4 = ipa4_CMU
+
+        self.words5 = words5
+        self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
+        self.ipa5   = ipa5_CMU
+
         self.words3 = words3
 
         self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -43,12 +68,20 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
     def setUpClass(self):
         
         self.words1 = words1
-        self.cmu1 = [['t iy1 ch er0']]
+        self.cmu1 = cmu1
         self.ipa1 = [['ˈtiʧər']]
         
         self.words2 = words2
-        self.cmu2 = [['aa1 r d v aa2 r k']]
+        self.cmu2 = cmu2
         self.ipa2 = [['ˈɑrdˌvɑrk']]
+
+        self.words4 = words4
+        self.cmu4 = [['ah0 g eh1 n', 'ah0 g ey1 n']]
+        self.ipa4 = ipa4_CMU
+
+        self.words5 = words5
+        self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
+        self.ipa5   = ipa5_CMU
 
         self.words3 = words3
 
@@ -57,8 +90,8 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
             ['ih2 n k l uw1 d ih0 ng'], ['dh ah0', 'dh ah1', 'dh iy0'], ['f r eh1 n ch'], ['k w iy1 n'], ['b ih0 f ao1 r', 'b iy2 f ao1 r'],
             ['sh iy1'], ['hh er1 d'], ['dh ae1 t', 'dh ah0 t'], ['s ih1 m f ah0 n iy0'], ['ah0 g eh1 n', 'ah0 g ey1 n'], ['jh ah1 s t', 'jh ih0 s t'],
             ['ae1 z', 'eh1 z'], ['y ah1 ng'], ['aa1 r th er0'], ['w ao1 n t ih0 d']]
-        self.ipa3 = [['ðə', 'ði'], ['beɪʒ'], ['hju'], ['ɑn', 'ɔn'], ['ðə', 'ði'], ['ˈwɔtərz'], ['əv'], ['ðə', 'ði'], ['lɑk'], ['ˌɪmˈprɛst'], ['ɔl'],
-            ['ˌɪnˈkludɪŋ'], ['ðə', 'ði'], ['frɛnʧ'], ['kwin'], ['bɪˈfɔr', 'ˌbiˈfɔr'], ['ʃi'], ['hərd'], ['ðæt', 'ðət'], ['ˈsɪmfəni'], ['əˈgɛn', 'əˈgeɪn'],
+        self.ipa3 = [['ðə','ði'], ['beɪʒ'], ['hju'], ['ɑn', 'ɔn'], ['ðə','ði'], ['ˈwɔtərz'], ['əv'], ['ðə','ði'], ['lɑk'], ['ˌɪmˈprɛst'], ['ɔl'],
+            ['ˌɪnˈkludɪŋ'], ['ðə','ði'], ['frɛnʧ'], ['kwin'], ['bɪˈfɔr', 'ˌbiˈfɔr'], ['ʃi'], ['hərd'], ['ðæt', 'ðət'], ['ˈsɪmfəni'], ['əˈgɛn', 'əˈgeɪn'],
             ['ʤəst', 'ʤɪst'], ['æz', 'ɛz'], ['jəŋ'], ['ˈɑrθər'], ['ˈwɔntɪd']]
             
         self.lang = 'CMU'
@@ -73,7 +106,13 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
 
         self.words2 = words2
         self.cmu2 = self.ipa2 = [['ˈɑː d v ɑː k']]
-        
+
+        self.words4 = words4
+        self.cmu4 = self.ipa4 = [['ɐ ɡ ˈe n', 'ə g ˈe n', 'ə g ˈe\u200dɪ n']]
+
+        self.words5 = words5
+        self.cmu5   = self.ipa5   = [['ð ə', 'ð iː', 'ð ˈiː']]
+
         self.words3 = words3
 
         self.cmu3 = self.ipa3 = [['ð ə', 'ð iː', 'ð ˈiː'], ['b ˈe‍ɪ ʒ'], ['h j ˈuː'], ['ˈɒ n'], ['ð ə', 'ð iː', 'ð ˈiː'], ['w ˈɔː t ə z'], ['ˈɒ v', 'ə v'],
@@ -94,6 +133,12 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.words2 = words2
         self.cmu2 = self.ipa2 = [['ˈɒ r d ˌv ɒ r k']]
         
+        self.words4 = words4
+        self.cmu4 = self.ipa4 = ipa4
+
+        self.words5 = words5
+        self.cmu5   = self.ipa5   = ipa5
+
         self.words3 = words3
 
         self.cmu3 = self.ipa3 = [['ð ə', 'ð iː'], ['b e‍ɪ ʒ'], ['h j uː'], ['ɒ n', 'ɔː n'], ['ð ə', 'ð iː'], ['ˈw ɔː t ə r z'], ['ə v'], ['ð ə', 'ð iː'],
