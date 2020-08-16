@@ -152,7 +152,7 @@ def get_entries(tokens_in, db_type="sql", language='cmu'):
     return ordered
 
 
-def cmu_to_ipa(cmu_list, mark=True, stress_marking='all'):
+def cmu_to_ipa(cmu_list, mark=True, stress_marking='all', sorted_list=True):
     """converts the CMU word lists into IPA transcriptions"""
     if( lang.dict != 'CMU_dict' ):
         return copy.deepcopy( cmu_list )
@@ -199,7 +199,10 @@ def cmu_to_ipa(cmu_list, mark=True, stress_marking='all'):
                 if not ipa_form.startswith(sym[0]):
                     ipa_form = ipa_form.replace(sym[0], sym[1])
             ipa_word_list.append(ipa_form)
-        final_list.append(sorted(list(OrderedDict.fromkeys(ipa_word_list))))
+        if sorted_list:
+            final_list.append(sorted(list(OrderedDict.fromkeys(ipa_word_list))))
+        else:
+            final_list.append(list(OrderedDict.fromkeys(ipa_word_list)))
     return final_list
 
 
