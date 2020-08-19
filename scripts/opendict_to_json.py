@@ -83,6 +83,11 @@ def fix_opendict(source):
   destination = destination.replace("ˌɛː", "ˌeə")
   destination = destination.replace("ɛː", "eə")
   destination = destination.replace("ɛ", "e")
+
+  # Map phonetic to phonemic
+  destination = destination.replace("ˈɐ", "ˈʌ")
+  destination = destination.replace("ˌɐ", "ˌʌ")
+  destination = destination.replace("ɐ", "ʌ")
   return destination
       
 if( __name__ == "__main__"):

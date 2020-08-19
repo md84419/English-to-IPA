@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create json versions of the source dictionaries
-awk -f csv_to_json.awk ../eng_to_ipa/resources/Britfone_source_files/britfone.main.3.0.1.csv > ../eng_to_ipa/resources/Britfone_dict.json
+PYTHONPATH=".." python britfonedict_to_json.py ../eng_to_ipa/resources/Britfone_source_files/britfone.main.3.0.1.csv > ../eng_to_ipa/resources/Britfone_dict.json
 PYTHONPATH=".." python opendict_to_json.py ../eng_to_ipa/resources/Opendict_source_files/en_UK.txt > ../eng_to_ipa/resources/Open_dict.json
 python cmudict_to_json.py
 
