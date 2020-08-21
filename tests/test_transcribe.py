@@ -116,7 +116,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.words3 = words3
 
         self.cmu3 = self.ipa3 = [['ð ə', 'ð iː', 'ð ˈiː'], ['b ˈe‍ɪ ʒ'], ['h j ˈuː'], ['ˈɒ n'], ['ð ə', 'ð iː', 'ð ˈiː'], ['w ˈɔː t ə z'], ['ˈɒ v', 'ə v'],
-            ['ð ə', 'ð iː', 'ð ˈiː'], ['l ˈɒ k'], ['ɪ m p r ˈe s t'], ['ˈɔː l'], ['ɪ n k l ˈuː d ɪ ŋ'], ['ð ə', 'ð iː', 'ð ˈiː'], ['f r ˈe n t\u200dʃ'],
+            ['ð ə', 'ð iː', 'ð ˈiː'], ['l ˈɒ x'], ['ɪ m p r ˈe s t'], ['ˈɔː l'], ['ɪ n k l ˈuː d ɪ ŋ'], ['ð ə', 'ð iː', 'ð ˈiː'], ['f r ˈe n t\u200dʃ'],
             ['k w ˈiː n'], ['b ɪ f ˈɔː'], ['ʃ ˈiː'], ['h ˈɜː d'], ['ð ˈæ t', 'ð ə t'], ['s ˈɪ m f ə n ˌiː', 's ˈɪ m f ə n iː'],
             ['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe‍ɪ n'], ['d\u200dʒ ˈʌ s t', 'd\u200dʒ ə s t'], ['ˈæ z', 'ə z'],['j ˈʌ ŋ'], ['ˈɑː θ ə'], ['w ˈɒ n t ɪ d']]
             

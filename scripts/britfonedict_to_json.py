@@ -48,6 +48,7 @@ def main(argv):
       britfone_dict.update( {k: [v]} )
 
   britfone_dict = fix_britfone( britfone_dict )
+  britfone_dict = fix_britfone_words( britfone_dict )
 
   if( output_file != None ):
     try:
@@ -114,6 +115,10 @@ def fix_britfone(source):
       #destination[key1][key2] = destination[key1][key2].replace("ɔ‍ɪ‍ə‍ʊ", "ɔ‍ɪ ə‍ʊ")
   return destination
 
+# fix whole words
+def fix_britfone_words( dct ):
+  dct.update({"loch": ["l ˈɒ x"]})
+  return dct
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])
