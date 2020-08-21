@@ -183,12 +183,16 @@ def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
                "hh": "h", "ih": "ɪ", "jh": "ʤ", "ng": "ŋ",  "ow": "oʊ", "oy": "ɔɪ",
                "sh": "ʃ", "th": "θ", "uh": "ʊ", "uw": "u", "zh": "ʒ", "iy": "i", "y": "j"}
     final_list = []  # the final list of IPA tokens to be returned
+    if stress_marking:
+        stress_marking = stress_marking.lower()
     for word_list in dict_list:
         ipa_word_list = []  # the word list for each word
         for word in word_list:
-            if lang.dict == 'CMU_dict' and stress_marking:
+            if lang.dict == 'CMU_dict' and stress_marking and stress_marking != 'none':
                 word = stress.find_stress(word, type=stress_marking)
             else:
+                if( not stress_marking or stress_marking != 'both' ):
+                    word = stress.keep_stress(word, type=stress_marking)
                 if re.sub(r"\d*", "", word.replace("__IGNORE__", "")) == "":
                     pass  # do not delete token if it's all numbers
                 else:
@@ -232,7 +236,7 @@ def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
 
 
 def get_top(ipa_list):
-    """Returns only the one result for a query. If multiple entries for words are found, only the first is used."""
+    """Returns only the one result for a query. If multiple entries for words are found, only the last is used."""
     return ' '.join([word_list[-1] for word_list in ipa_list])
 
 

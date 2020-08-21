@@ -42,6 +42,17 @@ with open(os.path.join(os.path.abspath(os.path.dirname(__file__)),
     phones = json.load(phones_json)
 
 
+def keep_stress(word, type="all"):
+    if type=='none':
+        word = word.replace('ˈ','')
+        word = word.replace('ˌ','')
+    elif type=='primary':
+        word = word.replace('ˌ','')
+    elif type=='secondary':
+        word = word.replace('ˈ','')
+    return word
+
+
 def find_stress(word, type="all"):
     """Convert stress marking numbers from CMU into actual stress markings
     :param word: the CMU word string to be evaluated for stress markings

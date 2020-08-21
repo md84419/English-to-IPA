@@ -45,5 +45,40 @@ class TestConversion(unittest.TestCase):
         self.assertEqual(stress.find_stress("dh iy0", type="both"), 'dh iy')
 
 
+class TestStress2(unittest.TestCase):
+    """Simple unit testing for the stress functions."""
+    @classmethod
+    def setUpClass(self):
+        self.lang = 'en_GB'
+
+    def test_find_stress(self):
+        test_string = "reflect respect recline reduce obsessively demonstrate baseball cloud brother cobblestone " +\
+            "complete conspire estuary"
+        dct = transcribe.get_entries(test_string.split(" "), language=self.lang)
+        ipa = transcribe.dict_to_ipa( dct, stress_marking='both')
+        self.assertEqual(ipa, [['rəˈflɛkt', 'rɪˈflɛkt'],
+                               ['riˈspɛkt', 'rɪˈspɛkt'],
+                               ['rɪˈklaɪn'],
+                               ['rɪˈdus'],
+                               ['ɑbˈsɛsɪvli'],
+                               ['ˈdɛmənˌstreɪt'],
+                               ['ˈbeɪsˈbɔl'],
+                               ['klaʊd'],
+                               ['ˈbrəðər'],
+                               ['ˈkɑbəlˌstoʊn'],
+                               ['kəmˈplit'],
+                               ['kənˈspaɪər'],
+                               ['ˈɛsʧuˌɛri']])
+
+        # test the retrieval of only primary stress
+        self.assertEqual(stress.keep_stress("s ˈɪ m f ə n ˌiː", type="primary"), 's ˈɪ m f ə n iː')
+        # test the retrieval of only secondary stress
+        self.assertEqual(stress.keep_stress("s ˈɪ m f ə n ˌiː", type="secondary"), 's ɪ m f ə n ˌiː')
+        # test the retrieval of both stress
+        self.assertEqual(stress.keep_stress("s ˈɪ m f ə n ˌiː", type="both"), 's ˈɪ m f ə n ˌiː')
+        #self.assertEqual(stress.find_stress("dh ah1", type="both"), 'dh ˈah')  # CMU dict provides stress for single-syllable words, eng-to-ipa currently disregards
+        self.assertEqual(stress.keep_stress("s ˈɪ m f ə n ˌiː", type="none"), 's ɪ m f ə n iː')
+
+
 if __name__ == "__main__":
     unittest.main()
