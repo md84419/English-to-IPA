@@ -58,14 +58,6 @@ def fix_cmu(source):
   destination = destination.replace("ɹ", "r")
   destination = destination.replace("o", "ə")
 
-  # Use the standard (quantitative-qualitative) IPA notation scheme for vowels
-  # See section 5 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
-  destination = destination.replace("ɑ", "ɒ")
-  destination = destination.replace("i", "iː")
-  destination = destination.replace("ɔ", "ɔː")
-  destination = destination.replace("u", "uː")
-  destination = destination.replace("ːː", "ː")
-
   # Undo Upton's scheme (Oxford dictionary)
   # See section 7 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
   # See also https://teflpedia.com/IPA_phoneme_/e%C9%99/ and related pages for the other symbols
@@ -83,12 +75,23 @@ def fix_cmu(source):
   destination = destination.replace("iə", "i‍ə")
   destination = destination.replace("tʃ", "t‍ʃ")
   destination = destination.replace("ɔɪ", "ɔ‍ɪ")
-  destination = destination.replace("əl", "ə‍l")
+  #destination = destination.replace("əl", "ə‍l")
   destination = destination.replace("əʊ", "ə‍ʊ")
   destination = destination.replace("ɛə", "ɛ‍ə")
   destination = destination.replace("ɪə", "ɪ‍ə")
   destination = destination.replace("ʊə", "ʊ‍ə")
 
+  # Use the standard (quantitative-qualitative) IPA notation scheme for vowels
+  # See section 5 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
+  #destination = destination.replace("ɒː", "ɒ")
+  destination = re.sub("ɑ(?!‍)", "ɒ", destination)
+  destination = re.sub("i(?!‍)", "iː", destination)
+  destination = re.sub("ɔ(?!‍)", "ɔː", destination)
+  destination = re.sub("u(?!‍)", "uː", destination)
+  destination = destination.replace("ːː", "ː")
+
+  # undo unusual triphtongs
+  destination = destination.replace("ə‍ʊ‍ə", "ə‍ʊ ə")
   return destination
   
 if( __name__ == "__main__"):
