@@ -42,15 +42,12 @@ def main(argv):
       if k == 'PROJECTS(2)': k = 'PROJECTS(1)'
       if k == 'PROJECTS(3)': k = 'PROJECTS(2)'
       
-      # Map phonetic to phonemic
-      v = v.replace("ˈɐ", "ˈʌ")
-      v = v.replace("ˌɐ", "ˌʌ")
-      v = v.replace("ɐ", "ʌ")
-      
       k = k.lower()
       v = v.lower()
       
       britfone_dict.update( {k: [v]} )
+
+  britfone_dict = fix_britfone( britfone_dict )
 
   if( output_file != None ):
     try:
@@ -66,6 +63,57 @@ def main(argv):
   j = re.sub("]}", "]\n}", j)
   print( j )
   sys.exit(0)
+
+def fix_britfone(source):
+  """Add the IPA nobreak characters to the diphthongs, as these aren't present in the source file"""
+  destination = source
+  for key1 in destination:
+    for key2 in range( len( destination[key1] )):
+      # Map phonetic to phonemic
+      destination[key1][key2] = destination[key1][key2].replace("ˈɐ", "ˈʌ")
+      destination[key1][key2] = destination[key1][key2].replace("ˌɐ", "ˌʌ")
+      destination[key1][key2] = destination[key1][key2].replace("ɐ", "ʌ")
+      destination[key1][key2] = destination[key1][key2].replace("ɹ", "r")
+      destination[key1][key2] = destination[key1][key2].replace("ɹ", "r")
+
+      # Undo Upton's scheme (Oxford dictionary)
+      # See section 7 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
+      # See also https://teflpedia.com/IPA_phoneme_/e%C9%99/ and related pages for the other symbols
+      destination[key1][key2] = destination[key1][key2].replace("ˈɛ", "ˈe")
+      destination[key1][key2] = destination[key1][key2].replace("ˌɛ", "ˌe")
+      destination[key1][key2] = destination[key1][key2].replace("ɛr", "e‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("ɛː", "e‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("ɛ", "e")
+
+      #mark the diphthongs with the non-breaking space character
+      destination[key1][key2] = destination[key1][key2].replace("aɪ", "a‍ɪ")
+      destination[key1][key2] = destination[key1][key2].replace("aʊ", "a‍ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("dʒ", "d‍ʒ")
+      destination[key1][key2] = destination[key1][key2].replace("eə", "e‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("eɪ", "e‍ɪ")
+      destination[key1][key2] = destination[key1][key2].replace("iə", "i‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("tʃ", "t‍ʃ")
+      destination[key1][key2] = destination[key1][key2].replace("ɔɪ", "ɔ‍ɪ")
+      destination[key1][key2] = destination[key1][key2].replace("əl", "ə‍l")
+      destination[key1][key2] = destination[key1][key2].replace("əʊ", "ə‍ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("ɛə", "ɛ‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("ɪə", "ɪ‍ə")
+      destination[key1][key2] = destination[key1][key2].replace("ʊə", "ʊ‍ə")
+
+      # Use the standard (quantitative-qualitative) IPA notation scheme for vowels
+      # See section 5 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
+      destination[key1][key2] = re.sub("ɑ(?!‍)", "ɑː", destination[key1][key2])
+      destination[key1][key2] = destination[key1][key2].replace("ɒː", "ɒ")
+      destination[key1][key2] = re.sub("i(?!‍)", "iː", destination[key1][key2])
+      destination[key1][key2] = re.sub("ɔ(?!‍)", "ɔː", destination[key1][key2])
+      destination[key1][key2] = re.sub("u(?!‍)", "uː", destination[key1][key2])
+      destination[key1][key2] = destination[key1][key2].replace("ːː", "ː")
+
+      # Change quadphthongs into 2x UK diphthongs
+      #destination[key1][key2] = destination[key1][key2].replace("e‍ɪ‍ə‍ʊ", "e‍ɪ ə‍ʊ")
+      #destination[key1][key2] = destination[key1][key2].replace("ɔ‍ɪ‍ə‍ʊ", "ɔ‍ɪ ə‍ʊ")
+  return destination
+
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])
