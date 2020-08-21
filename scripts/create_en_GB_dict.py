@@ -55,23 +55,28 @@ def main(argv):
       britfone_dict.pop(key, None)
       log.debug( "New value is {0}: {1}".format( tmpkey, britfone_dict[tmpkey] ) )
 
-  britfone_dict = fix_britfone( britfone_dict )
-
   # create gb dict from Open_dict
+  gb_dict = copy.deepcopy( open_dict )
+
   # add in Britfone_dict entries
-  gb_dict = fix_gb( open_dict )
   opendict_count = len( gb_dict )
+  found = -1
   for key in britfone_dict:
     if( key not in gb_dict ):
       gb_dict[key] = []
       britfone_count +=1
     else:
-      both_count +=1
-      opendict_count -=1
+      found = 0
     for idx in range( len( britfone_dict[key] ) ):
       if( britfone_dict[key][idx] not in gb_dict[key] ):
+        found = 1
         gb_dict[key].append( britfone_dict[key][idx] )
         log.debug( "Added open_dict '{0}' to en_GB".format( key ) )
+    if found == 0:
+      britfone_count +=1
+    elif found == 1:
+      both_count +=1
+      opendict_count -=1
 
   # add in entries from the US dictionary if the word isn't in the GB dictioanry
   for key in cmu_dict:
@@ -84,6 +89,7 @@ def main(argv):
       cmu_count += 1
     log.debug( "{0}: {1}".format( key, gb_dict[key] ) )
 
+  gb_dict = fix_gb( gb_dict )
   if( output_file != None ):
     try:
       with open(os.path.join(os.path.abspath(os.path.dirname(__file__)),
@@ -97,70 +103,36 @@ def main(argv):
   j = re.sub("],", "],\n", j)
   j = re.sub("]}", "]\n}", j)
   print( j )
-  log.info( "Entries Britfone keys: {0}".format( britfone_count ) )
-  log.info( "Entries Opendict keys: {0}".format( opendict_count ) )
+  log.info( "Entries using Britfone keys: {0}".format( britfone_count ) )
+  log.info( "Entries using Opendict keys: {0}".format( opendict_count ) )
   log.info( "Entries using both keys: {0}".format( both_count ) )
+  log.info( "Total British English Entries in en_GB dictionary: {0}".format( britfone_count+opendict_count+both_count ) )
   log.info( "Entries using en_US keys: {0}".format( cmu_count ) )
   log.info( "Total Entries in en_GB dictionary: {0}".format( len( gb_dict ) ) )
   sys.exit(0)
 
-def fix_britfone(source):
-  """Add the IPA nobreak characters to the diphthongs, as these aren't present in the source file"""
-  destination = source
-  for key1 in destination:
-    for key2 in range( len( destination[key1] )):
-      # Replace obsolete IPA symbols with their modern alternatives
-      destination[key1][key2] = destination[key1][key2].replace("ɹ", "r")
-
-      # Undo Upton's scheme (Oxford dictionary)
-      # See section 7 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
-      # See also https://teflpedia.com/IPA_phoneme_/e%C9%99/ and related pages for the other symbols
-      destination[key1][key2] = destination[key1][key2].replace("ˈɛ", "ˈe")
-      destination[key1][key2] = destination[key1][key2].replace("ˌɛ", "ˌe")
-      destination[key1][key2] = destination[key1][key2].replace("ɛr", "e‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ɛː", "e‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ɛ", "e")
-
-      # Use the standard (quantitative-qualitative) IPA notation scheme for vowels
-      # See section 5 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
-      destination[key1][key2] = destination[key1][key2].replace("ɑ", "ɑː")
-      destination[key1][key2] = destination[key1][key2].replace("ɒː", "ɒ")
-      destination[key1][key2] = destination[key1][key2].replace("i", "iː")
-      destination[key1][key2] = destination[key1][key2].replace("ɔ", "ɔː")
-      destination[key1][key2] = destination[key1][key2].replace("u", "uː")
-      destination[key1][key2] = destination[key1][key2].replace("ːː", "ː")
-
-      #mark the diphthongs with the non-breaking space character
-      destination[key1][key2] = destination[key1][key2].replace("aɪ", "a‍ɪ")
-      destination[key1][key2] = destination[key1][key2].replace("aʊ", "a‍ʊ")
-      destination[key1][key2] = destination[key1][key2].replace("dʒ", "d‍ʒ")
-      destination[key1][key2] = destination[key1][key2].replace("eə", "e‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("eɪ", "e‍ɪ")
-      destination[key1][key2] = destination[key1][key2].replace("iə", "i‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("tʃ", "t‍ʃ")
-      destination[key1][key2] = destination[key1][key2].replace("ɔɪ", "ɔ‍ɪ")
-      destination[key1][key2] = destination[key1][key2].replace("əl", "ə‍l")
-      destination[key1][key2] = destination[key1][key2].replace("əʊ", "ə‍ʊ")
-      destination[key1][key2] = destination[key1][key2].replace("ɛə", "ɛ‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ɪə", "ɪ‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ʊə", "ʊ‍ə")
-  return destination
 
 def fix_gb(source):
   destination = copy.deepcopy( source )
   for key1 in destination:
     for key2 in range( len( destination[key1] )):
-      # Replace obsolete IPA symbols with their modern alternatives
-      destination[key1][key2] = destination[key1][key2].replace("ɹ", "r")
+      #Split quadphgraphs into 2x diphgraphs
+      destination[key1][key2] = destination[key1][key2].replace("e‍ɪ‍ə‍ʊ", "e‍ɪ ə‍ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("ɔ‍ɪ‍ə‍ʊ", "ɔ‍ɪ ə‍ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("a‍ɪ‍ə‍ʊ", "a‍ɪ ə‍ʊ")
 
-      # Undo Upton's scheme (Oxford dictionary)
-      # See section 7 of https://www.phon.ucl.ac.uk/home/wells/ipa-english-uni.htm
-      # See also https://teflpedia.com/IPA_phoneme_/e%C9%99/ and related pages for the other symbols
-      destination[key1][key2] = destination[key1][key2].replace("ˈɛ", "ˈe")
-      destination[key1][key2] = destination[key1][key2].replace("ˌɛ", "ˌe")
-      destination[key1][key2] = destination[key1][key2].replace("ɛr", "e‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ɛː", "e‍ə")
-      destination[key1][key2] = destination[key1][key2].replace("ɛ", "e")
+      #Split triphthongs into diphthong followed by schwa or ʊ
+      #'a‍ɪ‍ə', 'a‍ʊ‍ə', 'e‍ɪ‍ə', 'e‍ə‍ʊ', 'ɔ‍ɪ‍ə', 'ɪ‍ə‍ʊ', 'ə‍ʊ‍ə'
+      destination[key1][key2] = destination[key1][key2].replace("a‍ɪ‍ə", "a‍ɪ ə")
+      destination[key1][key2] = destination[key1][key2].replace("a‍ʊ‍ə", "a‍ʊ ə")
+      destination[key1][key2] = destination[key1][key2].replace("e‍ɪ‍ə", "e‍ɪ ə")
+      destination[key1][key2] = destination[key1][key2].replace("e‍ə‍ʊ", "e‍ə ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("ɔ‍ɪ‍ə", "ɔ‍ɪ ə")
+      destination[key1][key2] = destination[key1][key2].replace("ɪ‍ə‍ʊ", "ɪ‍ə ʊ")
+      destination[key1][key2] = destination[key1][key2].replace("ə‍ʊ‍ə", "ə‍ʊ ə")
+
+      #Replace US English diphthongs with UK English alternatives
+      destination[key1][key2] = destination[key1][key2].replace("i‍ə", "iː ə")
   return destination
 
 if( __name__ == "__main__"):
