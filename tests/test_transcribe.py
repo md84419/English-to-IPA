@@ -102,13 +102,13 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.maxDiff = None
         
         self.words1 = words1
-        self.cmu1 = self.ipa1 = [['t ˈiː t\u200dʃ ɐ', 't ˈiː t\u200dʃ ə']]
+        self.cmu1 = self.ipa1 = [['t ˈiː t\u200dʃ ʌ','t ˈiː t\u200dʃ ə']]
 
         self.words2 = words2
         self.cmu2 = self.ipa2 = [['ˈɑː d v ɑː k']]
 
         self.words4 = words4
-        self.cmu4 = self.ipa4 = [['ɐ ɡ ˈe n', 'ə g ˈe n', 'ə g ˈe\u200dɪ n']]
+        self.cmu4 = self.ipa4 = [['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe\u200dɪ n']]
 
         self.words5 = words5
         self.cmu5   = self.ipa5   = [['ð ə', 'ð iː', 'ð ˈiː']]
@@ -117,8 +117,8 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
 
         self.cmu3 = self.ipa3 = [['ð ə', 'ð iː', 'ð ˈiː'], ['b ˈe‍ɪ ʒ'], ['h j ˈuː'], ['ˈɒ n'], ['ð ə', 'ð iː', 'ð ˈiː'], ['w ˈɔː t ə z'], ['ˈɒ v', 'ə v'],
             ['ð ə', 'ð iː', 'ð ˈiː'], ['l ˈɒ k'], ['ɪ m p r ˈe s t'], ['ˈɔː l'], ['ɪ n k l ˈuː d ɪ ŋ'], ['ð ə', 'ð iː', 'ð ˈiː'], ['f r ˈe n t\u200dʃ'],
-            ['k w ˈiː n'], ['b ɪ f ˈɔː'], ['ʃ ˈiː'], ['h ˈɜː d'], ['ð ˈæ t', 'ð ə t'], ['s ˈɪ m f ə n ˌ i', 's ˈɪ m f ə n iː'],
-            ['ɐ ɡ ˈe n', 'ə g ˈe n', 'ə g ˈe‍ɪ n'], ['d\u200dʒ ˈʌ s t', 'd\u200dʒ ə s t', 'd\u200dʒ ˈɐ s t'], ['ˈæ z', 'ə z'],['j ˈʌ ŋ', 'j ˈɐ ŋ'], ['ˈɑː θ ə'], ['w ˈɒ n t ɪ d']]
+            ['k w ˈiː n'], ['b ɪ f ˈɔː'], ['ʃ ˈiː'], ['h ˈɜː d'], ['ð ˈæ t', 'ð ə t'], ['s ˈɪ m f ə n ˌiː', 's ˈɪ m f ə n iː'],
+            ['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe‍ɪ n'], ['d\u200dʒ ˈʌ s t', 'd\u200dʒ ə s t'], ['ˈæ z', 'ə z'],['j ˈʌ ŋ'], ['ˈɑː θ ə'], ['w ˈɒ n t ɪ d']]
             
         self.lang = 'en_GB'
 
