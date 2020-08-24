@@ -72,7 +72,11 @@ def main(argv):
 
 def fix_opendict(source):
   destination = source
-  # Replace obsolete IPA symbols with their modern alternatives
+  # Map phonetic to phonemic; Anglicise IPA for foreign words (croissant, denouement, frisson, etc)
+  destination = destination.replace("ɐ", "ʌ")
+  destination = destination.replace("ɡ", "g")
+  destination = destination.replace("ɔ̃", "ɔ")
+  destination = destination.replace("ɑ̃", "ɑ")
   destination = destination.replace("ɹ", "r")
   destination = destination.replace("ˈɛ", "ˈe")
   destination = destination.replace("ˌɛ", "ˌe")
@@ -127,16 +131,15 @@ def fix_opendict(source):
   destination = destination.replace("ɔ‍ɪ‍ə", "ɔ‍ɪə")
   destination = destination.replace("ɪ‍ə‍ʊ", "ɪ‍əʊ")
   destination = destination.replace("ə‍ʊ‍ə", "ə‍ʊə")
-
-  # Map phonetic to phonemic
-  destination = destination.replace("ɐ", "ʌ")
-  destination = destination.replace("ɡ", "g")
   return destination
 
 # fix whole words
 def fix_opendict_words( dct ):
   dct.update({"ablation": ["ʌblˈe‍ɪʃən","ʌblˈe‍ɪʃn"]})
   #dct.update({"abdominal": ["æbdˈɒmənəl"]})
+  dct.update({"llanos": ["lænˈə‍ʊz"]})
+  dct.update({"denouement": ["de‍ɪnˈuːmɔː"]})
+  dct.update({"argyll": ["ˈɑːga‍ɪl"]})
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])
