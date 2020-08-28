@@ -16,14 +16,6 @@ BEGIN {
   sub(/\[\"\//, "[\"", $NF);
   sub(/\/\"\]/, "\"]", $NF);
 
-  #insert spaces after each symbol
-  i#cmd="python tokenize.py "$NF
-  #$NF=""
-  #while( ( cmd | getline result ) > 0 ) {
-  #  $NF = $NF$result
-  #}
-  #close(cmd)
-
   if( last==FNR ) {
     printf("%s\n",$NF);
   } else {

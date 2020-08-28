@@ -76,7 +76,7 @@ def fix_opendict(source):
   destination = destination.replace("ɐ", "ʌ")
   destination = destination.replace("ɡ", "g")
   destination = destination.replace("ɔ̃", "ɔ")
-  destination = destination.replace("ɑ̃", "ɑ")
+  destination = destination.replace("ɑ̃", "ɒn")
   destination = destination.replace("ɹ", "r")
   destination = destination.replace("ˈɛ", "ˈe")
   destination = destination.replace("ˌɛ", "ˌe")
@@ -140,6 +140,8 @@ def fix_opendict_words( dct ):
   dct.update({"llanos": ["lænˈə‍ʊz"]})
   dct.update({"denouement": ["de‍ɪnˈuːmɔː"]})
   dct.update({"argyll": ["ˈɑːga‍ɪl"]})
+  dct.update({"croissant": ["kwæsɒŋ","kwæsɒn"]})
+  dct.update({"croissants": ["kwæsɒŋs","kwæsɒns"]})
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])
