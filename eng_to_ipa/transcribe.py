@@ -261,14 +261,14 @@ def get_all(ipa_list):
     return sorted([sent[:-1] for sent in list_all])
 
 
-def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", language='cmu'):
+def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", language='cmu', sorted_list=True):
     """Returns a list of all the discovered IPA transcriptions for each word."""
     global lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
     dct = get_entries([w[1] for w in words], db_type=db_type)
-    ipa = dict_to_ipa(dct, stress_marking=stress_marks)
+    ipa = dict_to_ipa(dct, stress_marking=stress_marks, sorted_list=sorted_list)
     if keep_punct:
         ipa = _punct_replace_word(words, ipa)
     return ipa
@@ -299,13 +299,13 @@ def contains(ipa, db_type="sql"):
         return [list(res) for res in asset.fetchall()]
 
 
-def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu'):
+def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu', sorted_list=True):
     """takes either a string or list of English words and converts them to IPA"""
     ipa = ipa_list(words_in=text, keep_punct=keep_punct,
-                   stress_marks=stress_marks, db_type=mode, language=language)
+                   stress_marks=stress_marks, db_type=mode, language=language, sorted_list=sorted_list)
     return get_all(ipa) if retrieve_all else get_top(ipa)
 
 
-def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu'):
+def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu', sorted_list=True):
     """Forces use of JSON database for fetching phoneme data."""
-    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language)
+    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language, sorted_list=sorted_list)
