@@ -14,6 +14,7 @@ OPEN_DICT     = 'Open_dict.json'
 BRITFONE_DICT = 'Britfone_dict.json'
 CMU_DICT      = 'en_US.json'
 EN_GB_DICT    = 'en_GB.json'
+DROP_OPENDICT = 'Open_dict_drop.json'
 
 debug = False
 debug2 = False
@@ -56,7 +57,7 @@ def main(argv):
       log.debug( "New value is {0}: {1}".format( tmpkey, britfone_dict[tmpkey] ) )
 
   # create gb dict from Open_dict
-  gb_dict = copy.deepcopy( open_dict )
+  gb_dict = fix_opendict( open_dict )
 
   # add in Britfone_dict entries
   opendict_count = len( gb_dict )
@@ -110,6 +111,19 @@ def main(argv):
   log.info( "Entries using en_US keys: {0}".format( cmu_count ) )
   log.info( "Total Entries in en_GB dictionary: {0}".format( len( gb_dict ) ) )
   sys.exit(0)
+
+
+def fix_opendict(source):
+  destination = copy.deepcopy( source )
+  
+  with open( os.path.join(os.path.abspath(os.path.dirname(__file__)),
+                       '..','eng_to_ipa','resources',DROP_OPENDICT), 'r') as odd_fh:
+    open_dict_drop = json.load( odd_fh )
+  
+  for key in open_dict_drop:
+    if key in destination:
+      destination.pop(key, None)
+  return destination
 
 
 def fix_gb(source):

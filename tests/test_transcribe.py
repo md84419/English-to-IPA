@@ -102,7 +102,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.maxDiff = None
         
         self.words1 = words1
-        self.cmu1 = self.ipa1 = [['t ˈiː t\u200dʃ ʌ','t ˈiː t\u200dʃ ə']]
+        self.cmu1 = self.ipa1 = [['t ˈiː t\u200dʃ ə']]
 
         self.words2 = words2
         self.cmu2 = self.ipa2 = [['ˈɑː d v ɑː k']]
