@@ -120,7 +120,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
             ['k w ˈiː n'], ['b ɪ f ˈɔː'], ['ʃ ˈiː'], ['h ˈɜː d'], ['ð ˈæ t', 'ð ə t'], ['s ˈɪ m f ə n ˌiː', 's ˈɪ m f ə n iː'],
             ['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe‍ɪ n'], ['d\u200dʒ ˈʌ s t', 'd\u200dʒ ə s t'], ['ˈæ z', 'ə z'],['j ˈʌ ŋ'], ['ˈɑː θ ə'], ['w ˈɒ n t ɪ d']]
             
-        self.lang = 'en_GB'
+        self.lang = 'en-GB'
 
 class TestConversion_en_US(transcribe_fixtures.BaseConversion):
     @classmethod
@@ -145,7 +145,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
             ['l ɒ k'], ['ˌɪ m ˈp r e s t'], ['ɔː l'], ['ˌɪ n ˈk l uː d ɪ ŋ'], ['ð ə', 'ð iː'], ['f r e n t‍ʃ'], ['k w iː n'], ['b ɪ ˈf ɔː r', 'ˌb iː ˈf ɔː r'], ['ʃ iː'], ['h ə r d'],
             ['ð æ t', 'ð ə t'], ['ˈs ɪ m f ə n iː'], ['ə ˈg e n', 'ə ˈg e‍ɪ n'], ['d‍ʒ ə s t', 'd‍ʒ ɪ s t'], ['æ z', 'e z'], ['j ə ŋ'], ['ˈɒ r θ ə r'], ['ˈw ɔː n t ɪ d']]
             
-        self.lang = 'en_US'
+        self.lang = 'en-US'
         
 #if __name__ == "__main__":
 #    unittest.main()

@@ -49,7 +49,7 @@ class TestStress2(unittest.TestCase):
     """Simple unit testing for the stress functions."""
     @classmethod
     def setUpClass(self):
-        self.lang = 'en_GB'
+        self.lang = 'en-GB'
 
     def test_find_stress(self):
         test_string = "reflect respect recline reduce obsessively demonstrate baseball cloud brother cobblestone " +\

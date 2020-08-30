@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import ast, copy, logging, os, re, sys
 from os.path import join, abspath, dirname
+from num2words import num2words
 import eng_to_ipa.stress as stress
 from collections import defaultdict, OrderedDict
 
@@ -36,13 +37,13 @@ class Language(object):
             self.lang = lang = 'cmu'
         self.dict = ''
         if lang == "cmu":
-            self.lang = 'en_US'
+            self.lang = 'en-US'
             self.dict = 'CMU_dict'
-        elif lang == "en_us":
-            self.lang = 'en_US'
+        elif lang == "en-us":
+            self.lang = 'en-US'
             self.dict = 'en_US'
-        elif lang == "en_gb":
-            self.lang = 'en_GB'
+        elif lang == "en-gb":
+            self.lang = 'en-GB'
             self.dict = 'en_GB'
         else:
             log.error("Language '{0}' not recognised.".format( lang ))
@@ -115,18 +116,10 @@ def fetch_words(words_in, db_type="sql"):
         for k, v in result:
             if( lang.dict == 'CMU_dict'):
                 d[k].append(v)
-#            elif( lang.dict == 'CMU'):
-#                logging.error("### dict == 'CMU'")
-#                sys.exit(2)
             else:
-#                try:
                 v = ast.literal_eval(v)
                 for val in v:
                     d[k].append(val)
-#                except SyntaxError:
-#                    logging.error("*** {}.{}: word is {}, ipa is {}".format(db_type, lang.dict, k,ast.literal_eval(v)[0]))
-#                except TypeError:
-#                    logging.error("*** {}.{}: word is {}, ipa is {}".format(db_type, lang.dict, k,ast.literal_eval(v)[0]))
         return list(d.items())
     if db_type.lower() == "json":
         words = []
@@ -140,8 +133,6 @@ def get_cmu(tokens_in, db_type="sql"):
 
 def get_entries(tokens_in, db_type="sql", language='cmu'):
     """query the SQL database for the words and return the phonemes in the order of user_in"""
-#    if( tokens_in == ast.literal_eval("['teacher']") or tokens_in == ast.literal_eval("['aardvark']")):
-#        logging.error("{}.{}: tokens in: {}".format(db_type, language, tokens_in))
     result = fetch_words(tokens_in, db_type)
     ordered = []
     space = ''
@@ -152,8 +143,6 @@ def get_entries(tokens_in, db_type="sql", language='cmu'):
     for word in tokens_in:
         this_word = [[i[1] for i in result if i[0] == word]][0]
         if this_word:
-#            if( word == 'teacher' or word == 'aardvark'):
-#                logging.error("{}.{}: word is {}, ipa0 is {}, ipa1 is {}".format(db_type, language, word,this_word,this_word[0]))
             ordered.append(this_word[0])
         else:
             if( word.find('-') != -1 ):

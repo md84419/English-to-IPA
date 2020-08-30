@@ -58,7 +58,23 @@ markings (ˈ, ˌ) should be retained. Understood arguments are:
    
 * **mode** : *string, optional (default='sql')* - Accepts "sql" or "json", depending on which version of the database you'd like to use.
  As another option for JSON users, simply use the function `jonvert` instead of `convert`. 
-   
+
+* **language** : *string, optional (defaul='cmu')* - The language tag in W3 / IETF BCP 47 format (ISO 639-1 lowercase 2- or 3- character
+language code then optionally a hyphen '-' then ISO 3166-1 uppercase 2-character country code then optionally a hyphen '-' followed by
+a 3-character region code) - example: en-GB, en-US (or in future, it, es-419, en-GB-WLS).  The special value 'cmu' is also supported for
+legacy behaviour consistent with eng_to_ipa v0.2.x (the Carnegie Mellon University US-English dictionary).
+
+Note: At the time of writing, eng_to_ipa supports three language tags: en-US, en-GB and cmu.  Future versions may support langauge tags
+from BCP 47 which are compliant with that standard but are not in the above format (e.g. zh-Hans).  BCP 47 states that language
+codes should be kept as short as possible - language code 'it' is prefered over 'it-IT' for example.
+Contributions providing further language dictionaries are welcome.
+
+See:
+* https://tools.ietf.org/html/bcp47
+* https://www.w3.org/International/articles/language-tags/
+
+* **sorted_list** : *bool, optional (default='True')* - Whether to return a sorted list or the list in the natural order of the source dictionary.  When sorted_list==False and retrieve_all==False, the 'best' match (the last transcription in the dictionary) will be returned.
+
 #### `ipa_list`
 
 The `ipa_list` function returns a list of each word as a list of all its possible transcriptions. It has all the same
