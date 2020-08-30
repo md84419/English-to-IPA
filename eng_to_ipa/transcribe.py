@@ -145,7 +145,35 @@ def get_entries(tokens_in, db_type="sql", language='cmu'):
         if this_word:
             ordered.append(this_word[0])
         else:
-            if( word.find('-') != -1 ):
+            # word not found in dict
+            # is it all numbers?
+            if( language != 'cmu' and re.match( r"\d", word) ):
+                tmpresult = re.sub(r"(?<![\-\d])(0+\d+)", lambda x: _phone( x.group(1)), word )
+                tmpresult = re.sub(r"([\-\.])(0+\d+)", lambda x: x.group(1) + _phone( x.group(2)), tmpresult )
+                tmpresult = re.sub(r"(?<![\-\d])(\d+)", lambda x: num2words( int(x.group(1))), tmpresult )
+                tmpresult = re.sub(r"([\-\.])(\d+)", lambda x: x.group(1) + num2words( int(x.group(2))), tmpresult )
+                tmpresult = get_entries( tmpresult.split(' '), db_type=db_type, language=language )
+                if( language == 'cmu' ):
+                    # @TODO: @FIXME
+                    print('lang is cmu')
+                    ordered.append(['1'])
+                else:
+                    for word in tmpresult:
+                        ordered.append( word )
+            # is it a letter followed by numbers?
+            elif( re.match( r"([a-z]+)(\d+)\Z", word) ):
+                # try the letters and numbers seperately
+                x = re.match(r"([a-z]+)(\d+)\Z", word)
+                tmpresult = get_entries( [x.group(1), x.group(2)] , db_type=db_type, language=language )
+                if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
+                    this_word = []
+                    for this_word1 in tmpresult[0]:
+                        for this_word2 in tmpresult[1]:
+                            this_word.append(this_word1 + space + this_word2)
+                    ordered.append(this_word)
+                else:
+                    ordered.append(["__IGNORE__" + word])
+            elif( word.find('-') != -1 ):
                 # we couldn't transliterate a hyphenated word - try word parts
                 tmpresult = get_entries( word.split('-'), db_type=db_type, language=language )
                 if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
@@ -160,6 +188,10 @@ def get_entries(tokens_in, db_type="sql", language='cmu'):
                 ordered.append(["__IGNORE__" + word])
     return ordered
 
+def _phone(number):
+    numbers = ['zero', 'one', 'two', 'three', 'four',
+               'five', 'six', 'seven', 'eight', 'nine']
+    return ' '.join(numbers[c] for c in map(int, number))
 
 def cmu_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
     """converts the CMU word lists into IPA transcriptions"""
@@ -256,9 +288,9 @@ def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
-    dct = get_entries([w[1] for w in words], db_type=db_type)
+    dct = get_entries([w[1] for w in words], db_type=db_type, language=language)
     ipa = dict_to_ipa(dct, stress_marking=stress_marks, sorted_list=sorted_list)
-    if keep_punct:
+    if language == 'cmu' and keep_punct:
         ipa = _punct_replace_word(words, ipa)
     return ipa
 
