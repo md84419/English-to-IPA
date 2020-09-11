@@ -11,6 +11,7 @@ words1 = "teacher".split()
 words2 = "aardvark".split()
 words4 = "again".split()
 words5 = "the".split()
+words6 = "loch".split()
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -54,6 +55,10 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa5_spaces = tk( self.ipa5, ' ')
         self.ipa5_none = tk( self.ipa5, '')
 
+        self.words6 = words6
+        self.cmu6 = [['l aa1 k']]
+        self.ipa6 = [['lɑk']]
+
         self.words3 = words3
 
         self.cmu3_none = self.cmu3_spaces = self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -93,6 +98,10 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa5_spaces = tk( self.ipa5, ' ')
         self.ipa5_none = tk( self.ipa5, '')
 
+        self.words6 = words6
+        self.cmu6 = [['l aa1 k']]
+        self.ipa6 = [['lɑk']]
+
         self.words3 = words3
 
         self.cmu3_none = self.cmu3_spaces = self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -129,6 +138,9 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
         self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
 
+        self.words6 = words6
+        self.cmu6 = self.ipa6 = [['lˈɒx']]
+
         self.words3 = words3
 
         self.cmu3 = self.ipa3 = [['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['bˑˈe‍ɪˑʒ'], ['hˑjˑˈuː'], ['ˈɒˑn'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['wˑˈɔːˑtˑəˑz'], ['ˈɒˑv', 'əˑv'],
@@ -161,6 +173,9 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.cmu5   = self.ipa5   = ipa5
         self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
         self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
+
+        self.words6 = words6
+        self.cmu6 = self.ipa6 = [['lɒk']]
 
         self.words3 = words3
 

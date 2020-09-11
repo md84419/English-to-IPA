@@ -68,6 +68,18 @@ class BaseConversion(unittest.TestCase):
         res1 = transcribe.cmu_to_ipa( self.cmu5_none, stress_marking='both', sorted_list=False, token_marking='none')
         self.assertEqual(res1, self.ipa5_none)
 
+    def test_get_cmu_loch(self):
+        res1 = transcribe.get_entries(self.words6, db_type='sql', language=self.lang, token_marking='none')
+        res2 = transcribe.get_entries(self.words6, db_type='json', language=self.lang, token_marking='none')
+        self.assertEqual(res1, self.cmu6)
+        self.assertEqual(res2, self.cmu6)
+        self.assertEqual(res1, res2)
+
+    def test_cmu_to_ipa_loch(self):
+        transcribe.set_language( self.lang )
+        res1 = transcribe.cmu_to_ipa( self.cmu6, stress_marking='both')
+        self.assertEqual(res1, self.ipa6)
+
     def test_get_cmu_panagram(self):
         res1 = transcribe.get_entries(self.words3, db_type='sql', language=self.lang, token_marking='spaces')
         res2 = transcribe.get_entries(self.words3, db_type='json', language=self.lang, token_marking='spaces')
