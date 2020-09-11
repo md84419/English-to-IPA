@@ -59,7 +59,7 @@ markings (ˈ, ˌ) should be retained. Understood arguments are:
 * **mode** : *string, optional (default='sql')* - Accepts "sql" or "json", depending on which version of the database you'd like to use.
  As another option for JSON users, simply use the function `jonvert` instead of `convert`. 
 
-* **language** : *string, optional (defaul='cmu')* - The language tag in W3 / IETF BCP 47 format (ISO 639-1 lowercase 2- or 3- character
+* **language** : *string, optional (default='cmu')* - The language tag in W3 / IETF BCP 47 format (ISO 639-1 lowercase 2- or 3- character
 language code then optionally a hyphen '-' then ISO 3166-1 uppercase 2-character country code then optionally a hyphen '-' followed by
 a 3-character region code) - example: en-GB, en-US (or in future, it, es-419, en-GB-WLS).  The special value 'cmu' is also supported for
 legacy behaviour consistent with eng_to_ipa v0.2.x (the Carnegie Mellon University US-English dictionary).
@@ -68,6 +68,14 @@ Note: At the time of writing, eng_to_ipa supports three language tags: en-US, en
 from BCP 47 which are compliant with that standard but are not in the above format (e.g. zh-Hans).  BCP 47 states that language
 codes should be kept as short as possible - language code 'it' is prefered over 'it-IT' for example.
 Contributions providing further language dictionaries are welcome.
+
+* **token_marking** : *string, optional (default='none')* - What tokenization to apply to the IPA.  Currently not implemented for language='cmu'
+where the tokenization is always 'none'.  In langauge modes other than 'cmu', the IPA no-space character is used between individual glyphs in
+dipthongs and affricates that use two UTF characters to build an IPA symbol.
+   * "none" - IPA symbols are not tokenized.  A regex expression can be used in calling code to split characters that don't have the IPA
+ no-space character between them.
+   * "spaces" - A space is inserted between each IPA symbol for ease of parsing.
+   * "symbols" - The IPA triangular interpunct character ('ˑ', UTF-8 0xCB 0x91, UTF-16 0x02DC) is inserted between each IPA symbol for ease of parsing.
 
 See:
 * https://tools.ietf.org/html/bcp47

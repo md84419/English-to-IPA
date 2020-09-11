@@ -5,7 +5,6 @@
 
 import csv, getopt, json, io, os, re, sys, subprocess
 from signal import signal, SIGPIPE, SIG_DFL
-from eng_to_ipa import tokenize
 
 signal(SIGPIPE, SIG_DFL)
 
@@ -43,7 +42,7 @@ def main(argv):
       if k == 'PROJECTS(3)': k = 'PROJECTS(2)'
       
       k = k.lower()
-      v = v.lower()
+      v = v.lower().replace(' ', 'ˑ')
       
       britfone_dict.update( {k: [v]} )
 

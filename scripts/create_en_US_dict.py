@@ -38,7 +38,7 @@ def main(argv):
       # fix CMU dictionary
       ipa[0][idx] = fix_cmu( ipa[0][idx] )
 
-      cmu_dict[key].append( tokenize.tokenize( ipa[0][idx] ) )
+      cmu_dict[key].append( tokenize.tokenize( ipa[0][idx], 'ˑ', 'symbols' ) )
 
   j = json.dumps( cmu_dict, check_circular=True, indent=None, separators=[',', ': '], sort_keys=True, ensure_ascii=False )
   j = re.sub(r"{", "{\n", j)

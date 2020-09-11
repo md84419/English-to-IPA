@@ -5,7 +5,7 @@
 
 from eng_to_ipa import transcribe
 import transcribe_fixtures
-import sys
+import copy, sys
 
 words1 = "teacher".split()
 words2 = "aardvark".split()
@@ -15,16 +15,16 @@ words5 = "the".split()
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
 
-ipa4     = [['ə ˈg e n', 'ə ˈg e\u200dɪ n']]
+ipa4     = [['əˑˈgˑeˑn', 'əˑˈgˑe\u200dɪˑn']]
 ipa4_CMU = [[
-        ipa4[0][0].replace(' ', '').replace('‍','').replace('en','ɛn'),
-        ipa4[0][1].replace(' ', '').replace('‍','')
+        ipa4[0][0].replace('ˑ', '').replace('‍','').replace('en','ɛn'),
+        ipa4[0][1].replace('ˑ', '').replace('‍','')
     ]]
 
-ipa5     = [['ð ə', 'ð iː']]
+ipa5     = [['ðˑə', 'ðˑiː']]
 ipa5_CMU = [[
-        ipa5[0][0].replace(' ', ''),
-        ipa5[0][1].replace(' ', '').replace('ː','')
+        ipa5[0][0],
+        ipa5[0][1].replace('ː','')
     ]]
 
 words3 = "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted."
@@ -35,24 +35,28 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
     @classmethod
     def setUpClass(self):
         self.words1 = words1
-        self.cmu1 = cmu1
-        self.ipa1 = [['ˈtiʧər']]
-        
+        self.cmu1_none = self.cmu1_spaces = self.cmu1 = cmu1
+        self.ipa1 = [['ˈtˑiˑʧˑəˑr']]
+        self.ipa1_spaces = tk( self.ipa1, ' ')
+        self.ipa1_none = tk( self.ipa1, '')
+
         self.words2 = words2
         self.cmu2 = cmu2
         self.ipa2 = [['ˈɑrdˌvɑrk']]
-        
+
         self.words4 = words4
         self.cmu4 = [['ah0 g eh1 n', 'ah0 g ey1 n']]
         self.ipa4 = ipa4_CMU
 
         self.words5 = words5
-        self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
-        self.ipa5   = ipa5_CMU
+        self.cmu5_none = self.cmu5_spaces = self.cmu5 = [['dh ah0', 'dh ah1', 'dh iy0']]
+        self.ipa5 = ipa5_CMU
+        self.ipa5_spaces = tk( self.ipa5, ' ')
+        self.ipa5_none = tk( self.ipa5, '')
 
         self.words3 = words3
 
-        self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
+        self.cmu3_none = self.cmu3_spaces = self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
             ['w ao1 t er0 z'], ['ah1 v', 'ah0 v'], ['dh ah0', 'dh ah1', 'dh iy0'], ['l aa1 k'], ['ih2 m p r eh1 s t'], ['ao1 l'],
             ['ih2 n k l uw1 d ih0 ng'], ['dh ah0', 'dh ah1', 'dh iy0'], ['f r eh1 n ch'], ['k w iy1 n'], ['b ih0 f ao1 r', 'b iy2 f ao1 r'],
             ['sh iy1'], ['hh er1 d'], ['dh ae1 t', 'dh ah0 t'], ['s ih1 m f ah0 n iy0'], ['ah0 g eh1 n', 'ah0 g ey1 n'], ['jh ah1 s t', 'jh ih0 s t'],
@@ -60,6 +64,8 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa3 = [['ðə', 'ði'], ['beɪʒ'], ['hju'], ['ɑn', 'ɔn'], ['ðə', 'ði'], ['ˈwɔtərz'], ['əv'], ['ðə', 'ði'], ['lɑk'], ['ˌɪmˈprɛst'], ['ɔl'],
             ['ˌɪnˈkludɪŋ'], ['ðə', 'ði'], ['frɛnʧ'], ['kwin'], ['bɪˈfɔr', 'ˌbiˈfɔr'], ['ʃi'], ['hərd'], ['ðæt', 'ðət'], ['ˈsɪmfəni'], ['əˈgɛn', 'əˈgeɪn'],
             ['ʤəst', 'ʤɪst'], ['æz', 'ɛz'], ['jəŋ'], ['ˈɑrθər'], ['ˈwɔntɪd']]
+        self.ipa3_spaces = tk( self.ipa3, ' ')
+        self.ipa3_none = tk( self.ipa3, '')
         
         self.lang = None
     
@@ -68,8 +74,10 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
     def setUpClass(self):
         
         self.words1 = words1
-        self.cmu1 = cmu1
+        self.cmu1_none = self.cmu1_spaces = self.cmu1 = cmu1
         self.ipa1 = [['ˈtiʧər']]
+        self.ipa1_spaces = tk( self.ipa1, ' ')
+        self.ipa1_none = tk( self.ipa1, '')
         
         self.words2 = words2
         self.cmu2 = cmu2
@@ -80,12 +88,14 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa4 = ipa4_CMU
 
         self.words5 = words5
-        self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
-        self.ipa5   = ipa5_CMU
+        self.cmu5_none = self.cmu5_spaces = self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
+        self.ipa5_none = self.ipa5_spaces = self.ipa5   = ipa5_CMU
+        self.ipa5_spaces = tk( self.ipa5, ' ')
+        self.ipa5_none = tk( self.ipa5, '')
 
         self.words3 = words3
 
-        self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
+        self.cmu3_none = self.cmu3_spaces = self.cmu3 = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
             ['w ao1 t er0 z'], ['ah1 v', 'ah0 v'], ['dh ah0', 'dh ah1', 'dh iy0'], ['l aa1 k'], ['ih2 m p r eh1 s t'], ['ao1 l'],
             ['ih2 n k l uw1 d ih0 ng'], ['dh ah0', 'dh ah1', 'dh iy0'], ['f r eh1 n ch'], ['k w iy1 n'], ['b ih0 f ao1 r', 'b iy2 f ao1 r'],
             ['sh iy1'], ['hh er1 d'], ['dh ae1 t', 'dh ah0 t'], ['s ih1 m f ah0 n iy0'], ['ah0 g eh1 n', 'ah0 g ey1 n'], ['jh ah1 s t', 'jh ih0 s t'],
@@ -93,6 +103,8 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa3 = [['ðə','ði'], ['beɪʒ'], ['hju'], ['ɑn', 'ɔn'], ['ðə','ði'], ['ˈwɔtərz'], ['əv'], ['ðə','ði'], ['lɑk'], ['ˌɪmˈprɛst'], ['ɔl'],
             ['ˌɪnˈkludɪŋ'], ['ðə','ði'], ['frɛnʧ'], ['kwin'], ['bɪˈfɔr', 'ˌbiˈfɔr'], ['ʃi'], ['hərd'], ['ðæt', 'ðət'], ['ˈsɪmfəni'], ['əˈgɛn', 'əˈgeɪn'],
             ['ʤəst', 'ʤɪst'], ['æz', 'ɛz'], ['jəŋ'], ['ˈɑrθər'], ['ˈwɔntɪd']]
+        self.ipa3_spaces = tk( self.ipa3, ' ')
+        self.ipa3_none = tk( self.ipa3, '')
             
         self.lang = 'CMU'
     
@@ -102,23 +114,30 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.maxDiff = None
         
         self.words1 = words1
-        self.cmu1 = self.ipa1 = [['t ˈiː t\u200dʃ ə']]
+        self.cmu1 = self.ipa1 = [['tˑˈiːˑt\u200dʃˑə']]
+        self.ipa1_spaces = self.cmu1_spaces = tk( self.ipa1, ' ')
+        self.ipa1_none = self.cmu1_none = tk( self.ipa1, '')
 
         self.words2 = words2
-        self.cmu2 = self.ipa2 = [['ˈɑː d v ɑː k']]
+        self.cmu2 = self.ipa2 = [['ˈɑːdvɑːk']]
 
         self.words4 = words4
-        self.cmu4 = self.ipa4 = [['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe\u200dɪ n']]
+        self.cmu4 = self.ipa4 = [['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe\u200dɪˑn']]
 
         self.words5 = words5
-        self.cmu5   = self.ipa5   = [['ð ə', 'ð iː', 'ð ˈiː']]
+        self.cmu5   = self.ipa5   = [['ðˑə', 'ðˑiː', 'ðˑˈiː']]
+        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
+        self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
 
         self.words3 = words3
 
-        self.cmu3 = self.ipa3 = [['ð ə', 'ð iː', 'ð ˈiː'], ['b ˈe‍ɪ ʒ'], ['h j ˈuː'], ['ˈɒ n'], ['ð ə', 'ð iː', 'ð ˈiː'], ['w ˈɔː t ə z'], ['ˈɒ v', 'ə v'],
-            ['ð ə', 'ð iː', 'ð ˈiː'], ['l ˈɒ x'], ['ɪ m p r ˈe s t'], ['ˈɔː l'], ['ɪ n k l ˈuː d ɪ ŋ'], ['ð ə', 'ð iː', 'ð ˈiː'], ['f r ˈe n t\u200dʃ'],
-            ['k w ˈiː n'], ['b ɪ f ˈɔː'], ['ʃ ˈiː'], ['h ˈɜː d'], ['ð ˈæ t', 'ð ə t'], ['s ˈɪ m f ə n ˌiː', 's ˈɪ m f ə n iː'],
-            ['ʌ g ˈe n', 'ə g ˈe n', 'ə g ˈe‍ɪ n'], ['d\u200dʒ ˈʌ s t', 'd\u200dʒ ə s t'], ['ˈæ z', 'ə z'],['j ˈʌ ŋ'], ['ˈɑː θ ə'], ['w ˈɒ n t ɪ d']]
+        self.cmu3 = self.ipa3 = [['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['bˑˈe‍ɪˑʒ'], ['hˑjˑˈuː'], ['ˈɒˑn'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['wˑˈɔːˑtˑəˑz'], ['ˈɒˑv', 'əˑv'],
+            ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['lˑˈɒˑx'], ['ɪˑmˑpˑrˑˈeˑsˑt'], ['ˈɔːˑl'], ['ɪˑnˑkˑlˑˈuːˑdˑɪˑŋ'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['fˑrˑˈeˑnˑt\u200dʃ'],
+            ['kˑwˑˈiːˑn'], ['bˑɪˑfˑˈɔː'], ['ʃˑˈiː'], ['hˑˈɜːˑd'], ['ðˑˈæˑt', 'ðˑəˑt'], ['sˑˈɪˑmˑfˑəˑnˑˌiː', 'sˑˈɪˑmˑfˑəˑnˑiː'],
+            ['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe‍ɪˑn'], ['d\u200dʒˑˈʌˑsˑt', 'd\u200dʒˑəˑsˑt'], ['ˈæˑz', 'əˑz'],['jˑˈʌˑŋ'], ['ˈɑːˑθˑə'], ['wˑˈɒˑnˑtˑɪˑd']]
+
+        self.ipa3_spaces = self.cmu3_spaces = tk( self.ipa3, ' ')
+        self.ipa3_none = self.cmu3_none = tk( self.ipa3, '')
             
         self.lang = 'en-GB'
 
@@ -128,24 +147,38 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.maxDiff = None
         
         self.words1 = words1
-        self.cmu1 = self.ipa1 = [['ˈt iː t‍ʃ ə r']]
+        self.cmu1 = self.ipa1 = [['ˈtˑiːˑt‍ʃˑəˑr']]
+        self.ipa1_spaces = self.cmu1_spaces = tk( self.ipa1, ' ')
+        self.ipa1_none = self.cmu1_none = tk( self.ipa1, '')
         
         self.words2 = words2
-        self.cmu2 = self.ipa2 = [['ˈɒ r d ˌv ɒ r k']]
+        self.cmu2 = self.ipa2 = [['ˈɒrdˌvɒrk']]
         
         self.words4 = words4
         self.cmu4 = self.ipa4 = ipa4
 
         self.words5 = words5
         self.cmu5   = self.ipa5   = ipa5
+        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
+        self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
 
         self.words3 = words3
 
-        self.cmu3 = self.ipa3 = [['ð ə', 'ð iː'], ['b e‍ɪ ʒ'], ['h j uː'], ['ɒ n', 'ɔː n'], ['ð ə', 'ð iː'], ['ˈw ɔː t ə r z'], ['ə v'], ['ð ə', 'ð iː'],
-            ['l ɒ k'], ['ˌɪ m ˈp r e s t'], ['ɔː l'], ['ˌɪ n ˈk l uː d ɪ ŋ'], ['ð ə', 'ð iː'], ['f r e n t‍ʃ'], ['k w iː n'], ['b ɪ ˈf ɔː r', 'ˌb iː ˈf ɔː r'], ['ʃ iː'], ['h ə r d'],
-            ['ð æ t', 'ð ə t'], ['ˈs ɪ m f ə n iː'], ['ə ˈg e n', 'ə ˈg e‍ɪ n'], ['d‍ʒ ə s t', 'd‍ʒ ɪ s t'], ['æ z', 'e z'], ['j ə ŋ'], ['ˈɒ r θ ə r'], ['ˈw ɔː n t ɪ d']]
-            
+        self.cmu3 = self.ipa3 = [['ðˑə', 'ðˑiː'], ['bˑe‍ɪˑʒ'], ['hˑjˑuː'], ['ɒˑn', 'ɔːˑn'], ['ðˑə', 'ðˑiː'], ['ˈwˑɔːˑtˑəˑrˑz'], ['əˑv'], ['ðˑə', 'ðˑiː'],
+            ['lˑɒˑk'], ['ˌɪ mˑˈpˑrˑeˑsˑt'], ['ɔːˑl'], ['ˌɪˑnˑˈkˑlˑuːˑdˑɪˑŋ'], ['ðˑə', 'ðˑiː'], ['fˑrˑeˑnˑt‍ʃ'], ['kˑwˑiːˑn'], ['bˑɪˑˈfˑɔːˑr', 'ˌbˑiːˑˈfˑɔːˑr'], ['ʃˑiː'], ['hˑəˑrˑd'],
+            ['ðˑæˑt', 'ðˑəˑt'], ['ˈsˑɪˑmˑfˑəˑnˑiː'], ['əˑˈgˑeˑn', 'əˑˈgˑe‍ɪˑn'], ['d‍ʒˑəˑsˑt', 'd‍ʒˑɪˑsˑt'], ['æˑz', 'eˑz'], ['jˑəˑŋ'], ['ˈɒˑrˑθˑəˑr'], ['ˈwˑɔːˑnˑtˑɪˑd']]
+
+        self.ipa3_spaces = self.cmu3_spaces = tk( self.ipa3, ' ')
+        self.ipa3_none = self.cmu3_none = tk( self.ipa3, '')
+
         self.lang = 'en-US'
-        
+
+def tk(arr, replace):
+    newArr = copy.deepcopy(arr)
+    for i in range( len( newArr)):
+        for j in range( len( newArr[i])):
+            newArr[i][j] = newArr[i][j].replace('ˑ', replace)
+    return newArr
+
 #if __name__ == "__main__":
 #    unittest.main()

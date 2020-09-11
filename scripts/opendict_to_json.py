@@ -56,7 +56,7 @@ def main(argv):
     #if debug2: print( open_dict[key][0] )
     for idx in range( len( open_dict[key] ) ):
       open_dict[key][idx] = fix_opendict( open_dict[key][idx] )
-      open_dict[key][idx] = tokenize.tokenize( open_dict[key][idx] )
+      open_dict[key][idx] = tokenize.tokenize( open_dict[key][idx], 'ˑ', 'symbols' )
     #if debug2: print( "{0} {1}".format( key, open_dict[key][0] ) )
   
   if( output_file != None ):
@@ -142,7 +142,7 @@ def fix_opendict_words( dct ):
   dct.update({"argyll": ["ˈɑːga‍ɪl"]})
   dct.update({"croissant": ["kwæsɒŋ","kwæsɒn"]})
   dct.update({"croissants": ["kwæsɒŋs","kwæsɒns"]})
-  dct.update({"bach": ["b ˈɒ x"]})
+  dct.update({"bach": ["bˈɒx"]})
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])

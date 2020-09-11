@@ -104,8 +104,14 @@ def _punct_replace_word(original, transcription):
     return transcription
 
 
-def fetch_words(words_in, db_type="sql"):
+def fetch_words(words_in, db_type="sql", token_marking="none"):
     """fetches a list of words from the database"""
+    # token_marking = 'none' is the default...
+    replace = ''
+    if token_marking == 'none':
+        replace = ''
+    if token_marking == 'spaces':
+        replace = ' '
     asset = ModeType(mode=db_type).mode
     if db_type.lower() == "sql":
         quest = "?, " * len(words_in)
@@ -119,21 +125,28 @@ def fetch_words(words_in, db_type="sql"):
             else:
                 v = ast.literal_eval(v)
                 for val in v:
+                    # if token_marking == 'symbols', leave the 'ˑ' characters in the results
+                    if token_marking == 'none' or token_marking == 'spaces':
+                        val = val.replace('ˑ', replace)
                     d[k].append(val)
         return list(d.items())
     if db_type.lower() == "json":
         words = []
         for k, v in asset.items():
             if k in words_in:
+                # if token_marking == 'symbols', leave the 'ˑ' characters in the results
+                if token_marking == 'none' or token_marking == 'spaces':
+                    for idx in range( len(v) ):
+                        v[idx] = v[idx].replace('ˑ', replace)
                 words.append((k, v))
         return words
 
 def get_cmu(tokens_in, db_type="sql"):
     return get_entries(tokens_in, db_type, language='cmu')
 
-def get_entries(tokens_in, db_type="sql", language='cmu'):
+def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
     """query the SQL database for the words and return the phonemes in the order of user_in"""
-    result = fetch_words(tokens_in, db_type)
+    result = fetch_words(tokens_in, db_type, token_marking)
     ordered = []
     space = ''
 
@@ -193,11 +206,11 @@ def _phone(number):
                'five', 'six', 'seven', 'eight', 'nine']
     return ' '.join(numbers[c] for c in map(int, number))
 
-def cmu_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
+def cmu_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True, token_marking='none'):
     """converts the CMU word lists into IPA transcriptions"""
-    return dict_to_ipa(dict_list, mark, stress_marking, sorted_list)
+    return dict_to_ipa(dict_list, mark, stress_marking, sorted_list, token_marking)
 
-def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True):
+def dict_to_ipa(dict_list, mark=True, stress_marking='all', sorted_list=True, token_marking='none'):
     """converts the dictionary entries into eng-to-ipa format IPA transcriptions"""
     symbols = {"a": "ə", "ey": "eɪ", "aa": "ɑ", "ae": "æ", "ah": "ə", "ao": "ɔ",
                "aw": "aʊ", "ay": "aɪ", "ch": "ʧ", "dh": "ð", "eh": "ɛ", "er": "ər",
@@ -282,13 +295,13 @@ def get_all(ipa_list):
     return sorted([sent[:-1] for sent in list_all])
 
 
-def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", language='cmu', sorted_list=True):
+def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", language='cmu', sorted_list=True, token_marking='none'):
     """Returns a list of all the discovered IPA transcriptions for each word."""
     global lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
-    dct = get_entries([w[1] for w in words], db_type=db_type, language=language)
+    dct = get_entries([w[1] for w in words], db_type=db_type, language=language, token_marking=token_marking)
     ipa = dict_to_ipa(dct, stress_marking=stress_marks, sorted_list=sorted_list)
     if language == 'cmu' and keep_punct:
         ipa = _punct_replace_word(words, ipa)
@@ -320,13 +333,13 @@ def contains(ipa, db_type="sql"):
         return [list(res) for res in asset.fetchall()]
 
 
-def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu', sorted_list=True):
+def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu', sorted_list=True, token_marking='none'):
     """takes either a string or list of English words and converts them to IPA"""
     ipa = ipa_list(words_in=text, keep_punct=keep_punct,
-                   stress_marks=stress_marks, db_type=mode, language=language, sorted_list=sorted_list)
+                   stress_marks=stress_marks, db_type=mode, language=language, sorted_list=sorted_list, token_marking=token_marking)
     return get_all(ipa) if retrieve_all else get_top(ipa)
 
 
-def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu', sorted_list=True):
+def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu', sorted_list=True, token_marking='none'):
     """Forces use of JSON database for fetching phoneme data."""
-    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language, sorted_list=sorted_list)
+    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language, sorted_list=sorted_list, token_marking=token_marking)

@@ -28,7 +28,7 @@ def configure( config_file ):
   
 
 
-def tokenize( word ):
+def tokenize( word, separator=' ', mode='symbols' ):
   mylist = doubly_linked_list();
   mylist.push( word )
 
@@ -37,7 +37,7 @@ def tokenize( word ):
       continue
     while( mylist.tokenize( symbols_arr[key] ) ):
       pass
-  return mylist.get()
+  return mylist.get(separator)
 
 
 class Node:
@@ -107,6 +107,7 @@ class doubly_linked_list:
         NewNode.processed = True
         
   def tokenize( self, symbols ):
+    ''' Node:tokenize '''
     doneWork = False
     node = self.head
     if node is None:
@@ -135,7 +136,7 @@ class doubly_linked_list:
       node = node.next
     return doneWork
 
-  def get(self):
+  def get(self, separator=' '):
     ret = ""
     node = self.head
     while( node is not None):
@@ -143,5 +144,5 @@ class doubly_linked_list:
       last = node
       node = node.next
       if( (node is not None) and (len(node.data) > 0) ):
-        ret += " "
+        ret += separator
     return ret

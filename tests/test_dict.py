@@ -21,7 +21,7 @@ class BaseConversion(object):
         found = {}
         for key, vlist in thisdict.items():
             for value in vlist:
-                for symbol in re.split(' |ˈ|ˌ', value):
+                for symbol in re.split(' |ˈ|ˌ', value.replace('ˑ', ' ')):
                     if symbol != '' and symbol not in found and symbol not in known:
                         #value = value.replace('\u200d','')
                         found.update( {symbol:key+" /"+value+"/"} )
