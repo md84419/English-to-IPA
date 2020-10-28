@@ -17,7 +17,7 @@ For English-language IPA, this translates to:
 *  The consonants /p, t, k, b, d, f, v, s, z, m, n, r, l, w, h/
 *  /x/ as used in Scottish, Welsh and foreign-origin words, e.g. loch.
 *  The consonants /g, tʃ, θ, ʃ, ŋ, dʒ, ð, ʒ, j/ 
-*  The long vowels /ɪ, e, æ, ʊ, ʌ, ɒ, ə/
-*  The short vowels /ɑː, iː, uː, ɜː, ɔː/
+*  The short vowels /ɪ, e, æ, ʊ, ʌ, ɒ, ə/
+*  The long vowels /ɑː, iː, uː, ɜː, ɔː/
 *  The diphthongs /eɪ, aɪ, ɔɪ, ɪə, eə, əʊ, aʊ, ʊə/
 
