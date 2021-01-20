@@ -123,6 +123,12 @@ def fix_britfone_words( dct ):
   dct.pop('croissant', None)
   dct.pop('with(2)', None)
   dct.pop('with(4)', None)
+  dct.pop('years(2)', None)
+  dct.update({"years'": ["jˑˈɪ‍əˑz"]})
+  dct.update({"years-old": ["jˑˈɪ‍əˑzˑɔːˑlˑd"]})
+  dct.update({'light-years': ["ˈlˑa‍ɪˑˌtˑjˑˈɪ‍əˑz"]})
+  dct.update({'new-years': ["nˑjˑˈuːˑjˑˈɪ‍əˑz"]})
+  dct.update({'thousand-years-long': ["ˈθˑa‍ʊˑzˑəˑnˑˌdˑjˑˈɪ‍əˑzˑˈlˑɔːˑŋ"]})
   return dct
 
 if( __name__ == "__main__"):

@@ -18,6 +18,7 @@ words['with']  = "with".split()
 words['uk']    = "uk".split()
 words['gb']    = "gb".split()
 words['sewer'] = "sewer".split()
+words['years'] = "years".split()
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -74,8 +75,8 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         
         self.ipa['uk'] = 'uk*'
         self.ipa['gb'] = 'gb*'
-        
         self.ipa['sewer'] = 'suər'
+        self.ipa['years'] = 'jɪrz'
         
         self.words = words
         
@@ -130,8 +131,8 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         
         self.ipa['uk'] = 'uk*'
         self.ipa['gb'] = 'gb*'
-        
         self.ipa['sewer'] = 'suər'
+        self.ipa['years'] = 'jɪrz'
         
         self.words3 = words3
 
@@ -176,12 +177,12 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa = {}
         
         self.ipa['with'] = [['w ˈɪ ð', 'w ɪ ð']]
-        self.ipa7c = 'wˈɪð'
+        self.ipa7c = 'wɪð'
         
         self.ipa['uk'] = 'juːke‍ɪ'
         self.ipa['gb'] = 'd‍ʒiːbiː'
-
         self.ipa['sewer'] = 'sˈʊ‍ə'
+        self.ipa['years'] = 'jˈɪ‍əz'
         
         self.words3 = words3
 
@@ -227,8 +228,8 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         
         self.ipa['uk'] = 'uk*'
         self.ipa['gb'] = 'gb*'
-        
         self.ipa['sewer'] = 'suːər'
+        self.ipa['years'] = 'jɪrz'
 
         self.words3 = words3
 
