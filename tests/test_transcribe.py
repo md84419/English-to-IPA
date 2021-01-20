@@ -24,6 +24,7 @@ words['be'] = "be".split()
 words['will'] = "will".split()
 words['to'] = "to".split()
 words['for'] = "for".split()
+words['can'] = "can".split()
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -87,6 +88,7 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['will'] = 'wəl'
         self.ipa['to'] = 'tə'
         self.ipa['for'] = 'frər'
+        self.ipa['can'] = 'kən'
         
         self.words = words
         
@@ -148,6 +150,7 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['will'] = 'wəl'
         self.ipa['to'] = 'tə'
         self.ipa['for'] = 'frər'
+        self.ipa['can'] = 'kən'
         
         self.words3 = words3
 
@@ -203,6 +206,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['will'] = 'wˈɪl'
         self.ipa['to'] = 'tˈuː'
         self.ipa['for'] = 'fˈɔː'
+        self.ipa['can'] = 'kˈæn'
         
         self.words3 = words3
 
@@ -255,6 +259,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['will'] = 'wəl'
         self.ipa['to'] = 'tə'
         self.ipa['for'] = 'frər'
+        self.ipa['can'] = 'kən'
 
         self.words3 = words3
 
