@@ -22,6 +22,7 @@ words['years'] = "years".split()
 words['robotica'] = "robotica".split()
 words['be'] = "be".split()
 words['will'] = "will".split()
+words['to'] = "to".split()
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -83,6 +84,7 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['robotica'] = 'robotica*'
         self.ipa['be'] = 'bi'
         self.ipa['will'] = 'wəl'
+        self.ipa['to'] = 'tə'
         
         self.words = words
         
@@ -142,6 +144,7 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['robotica'] = 'robotica*'
         self.ipa['be'] = 'bi'
         self.ipa['will'] = 'wəl'
+        self.ipa['to'] = 'tə'
         
         self.words3 = words3
 
@@ -195,6 +198,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['robotica'] = "rˈə‍ʊbˈɒtɪkʌ"
         self.ipa['be'] = 'bˈiː'
         self.ipa['will'] = 'wˈɪl'
+        self.ipa['to'] = 'tˈuː'
         
         self.words3 = words3
 
@@ -245,6 +249,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['robotica'] = 'rˈə‍ʊbˈɒtɪkʌ'
         self.ipa['be'] = 'biː'
         self.ipa['will'] = 'wəl'
+        self.ipa['to'] = 'tə'
 
         self.words3 = words3
 
