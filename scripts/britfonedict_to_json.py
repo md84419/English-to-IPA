@@ -120,8 +120,8 @@ def fix_britfone_words( dct ):
   dct.update({"uk": ["jˑuːˑkˑe‍ɪ"]})
   dct.update({"gb": ["d‍ʒˑiːˑbˑiː"]})
   dct.pop('croissant', None)
-  #dct.pop('with(2)', None)
-  #dct.pop('with(4)', None)
+  dct.pop('with(2)', None)
+  dct.pop('with(4)', None)
   return dct
 
 if( __name__ == "__main__"):
