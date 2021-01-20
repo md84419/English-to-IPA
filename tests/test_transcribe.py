@@ -7,14 +7,17 @@ from eng_to_ipa import transcribe
 import transcribe_fixtures
 import copy, sys
 
+words = {}
+
 words1 = "teacher".split()
 words2 = "aardvark".split()
 words4 = "again".split()
 words5 = "the".split()
 words6 = "loch".split()
-words7 = "with".split()
-words8 = "uk".split()
-words9 = "gb".split()
+words['with']  = "with".split()
+words['uk']    = "uk".split()
+words['gb']    = "gb".split()
+words['sewer'] = "sewer".split()
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -63,14 +66,18 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.cmu6 = [['l aa1 k']]
         self.ipa6 = [['lɑk']]
         
-        self.words7 = words7
-        self.ipa7 = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
+        self.words = words
+        self.ipa = {}
+        
+        self.ipa['with'] = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
         self.ipa7c = 'wɪθ'
         
-        self.words8 = words8
-        self.ipa8 = 'uk*'
-        self.words9 = words9
-        self.ipa9 = 'gb*'
+        self.ipa['uk'] = 'uk*'
+        self.ipa['gb'] = 'gb*'
+        
+        self.ipa['sewer'] = 'suər'
+        
+        self.words = words
         
         self.words3 = words3
 
@@ -115,14 +122,16 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.cmu6 = [['l aa1 k']]
         self.ipa6 = [['lɑk']]
         
-        self.words7 = words7
-        self.ipa7 = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
+        self.words = words
+        self.ipa = {}
+        
+        self.ipa['with'] = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
         self.ipa7c = 'wɪθ'
         
-        self.words8 = words8
-        self.ipa8 = 'uk*'
-        self.words9 = words9
-        self.ipa9 = 'gb*'
+        self.ipa['uk'] = 'uk*'
+        self.ipa['gb'] = 'gb*'
+        
+        self.ipa['sewer'] = 'suər'
         
         self.words3 = words3
 
@@ -163,14 +172,16 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.words6 = words6
         self.cmu6 = self.ipa6 = [['lˈɒx']]
         
-        self.words7 = words7
-        self.ipa7 = [['w ˈɪ ð', 'w ɪ ð']]
+        self.words = words
+        self.ipa = {}
+        
+        self.ipa['with'] = [['w ˈɪ ð', 'w ɪ ð']]
         self.ipa7c = 'wˈɪð'
         
-        self.words8 = words8
-        self.ipa8 = 'juːke‍ɪ'
-        self.words9 = words9
-        self.ipa9 = 'd‍ʒiːbiː'
+        self.ipa['uk'] = 'juːke‍ɪ'
+        self.ipa['gb'] = 'd‍ʒiːbiː'
+
+        self.ipa['sewer'] = 'sˈʊ‍ə'
         
         self.words3 = words3
 
@@ -208,14 +219,16 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.words6 = words6
         self.cmu6 = self.ipa6 = [['lɒk']]
         
-        self.words7 = words7
-        self.ipa7 = [['w ɪ ð', 'w ɪ θ']]
+        self.words = words
+        self.ipa = {}
+        
+        self.ipa['with'] = [['w ɪ ð', 'w ɪ θ']]
         self.ipa7c = 'wɪθ'
         
-        self.words8 = words8
-        self.ipa8 = 'uk*'
-        self.words9 = words9
-        self.ipa9 = 'gb*'
+        self.ipa['uk'] = 'uk*'
+        self.ipa['gb'] = 'gb*'
+        
+        self.ipa['sewer'] = 'suːər'
 
         self.words3 = words3
 

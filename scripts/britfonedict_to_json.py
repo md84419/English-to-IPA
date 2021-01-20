@@ -119,6 +119,7 @@ def fix_britfone_words( dct ):
   dct.update({"loch": ["lˑˈɒˑx"]})
   dct.update({"uk": ["jˑuːˑkˑe‍ɪ"]})
   dct.update({"gb": ["d‍ʒˑiːˑbˑiː"]})
+  dct.update({"sewer": ["sˑˈʊ‍ə"]})
   dct.pop('croissant', None)
   dct.pop('with(2)', None)
   dct.pop('with(4)', None)
