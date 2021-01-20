@@ -96,5 +96,33 @@ class BaseConversion(unittest.TestCase):
         self.assertEqual(res2, self.ipa3_none)
         self.assertEqual(res3, self.ipa3)
         
+    # def test_get_ipa_with(self):
+    #     transcribe.set_language(self.lang)
+    #     res1 = transcribe.get_entries(self.words7, db_type='sql', language=self.lang, token_marking='spaces')
+    #     res2 = transcribe.get_entries(self.words7, db_type='json', language=self.lang, token_marking='spaces')
+    #     self.assertEqual( res1, self.ipa7 )
+    #     self.assertEqual( res2, self.ipa7 )
+    #     self.assertEqual(res1, res2 )   
+    #     res1 = transcribe.convert( self.words7, language=self.lang, mode='sql' )
+    #     res2 = transcribe.convert( self.words7, language=self.lang, mode='json' )
+    #     self.assertEqual( res1, self.ipa7c )
+    #     self.assertEqual( res2, self.ipa7c )
+    #     self.assertEqual(res1, res2 )
+
+    def test_get_ipa_gb(self):
+        transcribe.set_language(self.lang)
+        res1 = transcribe.convert( self.words8, language=self.lang, mode='sql' )
+        res2 = transcribe.convert( self.words8, language=self.lang, mode='json' )
+        self.assertEqual( res1, self.ipa8 )
+        self.assertEqual( res2, self.ipa8 )
+        self.assertEqual(res1, res2 )
+        
+    def test_get_ipa_uk(self):
+        res1 = transcribe.convert( self.words9, language=self.lang, mode='sql' )
+        res2 = transcribe.convert( self.words9, language=self.lang, mode='json' )
+        self.assertEqual( res1, self.ipa9 )
+        self.assertEqual( res2, self.ipa9 )
+        self.assertEqual(res1, res2 )
+        
 if __name__ == "__main__":
     unittest.main()
