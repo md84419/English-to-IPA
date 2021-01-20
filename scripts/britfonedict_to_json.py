@@ -129,6 +129,7 @@ def fix_britfone_words( dct ):
   dct.update({'light-years': ["ˈlˑa‍ɪˑˌtˑjˑˈɪ‍əˑz"]})
   dct.update({'new-years': ["nˑjˑˈuːˑjˑˈɪ‍əˑz"]})
   dct.update({'thousand-years-long': ["ˈθˑa‍ʊˑzˑəˑnˑˌdˑjˑˈɪ‍əˑzˑˈlˑɔːˑŋ"]})
+  dct.update({'robotica': ["rˑˈə‍ʊˑbˑˈɒˑtˑɪˑkˑʌ"]})
   return dct
 
 if( __name__ == "__main__"):

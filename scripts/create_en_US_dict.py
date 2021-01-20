@@ -40,6 +40,8 @@ def main(argv):
 
       cmu_dict[key].append( tokenize.tokenize( ipa[0][idx], 'ˑ', 'symbols' ) )
 
+  fix_US_words( cmu_dict )
+
   j = json.dumps( cmu_dict, check_circular=True, indent=None, separators=[',', ': '], sort_keys=True, ensure_ascii=False )
   j = re.sub(r"{", "{\n", j)
   j = re.sub(r"],", "],\n", j)
@@ -92,7 +94,12 @@ def fix_cmu(source):
 
   # undo unusual triphtongs
   destination = destination.replace("ə‍ʊ‍ə", "ə‍ʊ ə")
+
   return destination
-  
+
+# fix whole words
+def fix_US_words( dct ):
+  dct.update({'robotica': ["rˑˈə‍ʊˑbˑˈɒˑtˑɪˑkˑʌ"]})
+
 if( __name__ == "__main__"):
   main(sys.argv[1:])
