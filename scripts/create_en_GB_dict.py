@@ -72,7 +72,7 @@ def main(argv):
       if( britfone_dict[key][idx] not in gb_dict[key] ):
         found = 1
         gb_dict[key].append( britfone_dict[key][idx] )
-        log.debug( "Added open_dict '{0}' to en_GB".format( key ) )
+        log.debug( "Added britfone '{0}:{1}' to en_GB".format( key, idx ) )
     if found == 0:
       britfone_count +=1
     elif found == 1:
