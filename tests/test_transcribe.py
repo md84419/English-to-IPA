@@ -7,35 +7,37 @@ from eng_to_ipa import transcribe
 import transcribe_fixtures
 import copy, sys
 
-words = {}
-
-words1 = "teacher".split()
-words2 = "aardvark".split()
-words4 = "again".split()
-words5 = "the".split()
-words6 = "loch".split()
-
-words = {'with':'', 'uk':'', 'gb':'', 'sewer':'', 'years':'', 'robotica':'', 'be':'', 'will':'', 'to':'', 'for':'', 'can':'', 'visually':'', 'tv':''}
+words = {
+    'teacher':'', 'aardvark':'', 'again':'', 'the':'', 'loch':'',
+    'with':'', 'uk':'', 'gb':'', 'sewer':'', 'years':'', 'robotica':'', 'be':'', 'will':'', 'to':'', 'for':'', 'can':'', 'visually':'', 'tv':'',
+    'and':''
+}
 for key in words:
     #print ('key: ' + key)
     #print ('oldval: ' + words[key])
     words[key] = key.split()
 
 
+cmu = {
+    'teacher'   : [['t iy1 ch er0']],
+    'aardvark'  : [['aa1 r d v aa2 r k']]
+}
 
-cmu1   = [['t iy1 ch er0']]
-cmu2   = [['aa1 r d v aa2 r k']]
+ipa = {
+    'again': [['əˑˈgˑeˑn', 'əˑˈgˑe\u200dɪˑn']],
+    'the'  : [['ðˑə', 'ðˑiː']]
+}
 
-ipa4     = [['əˑˈgˑeˑn', 'əˑˈgˑe\u200dɪˑn']]
+
 ipa4_CMU = [[
-        ipa4[0][0].replace('ˑ', '').replace('‍','').replace('en','ɛn'),
-        ipa4[0][1].replace('ˑ', '').replace('‍','')
+        ipa['again'][0][0].replace('ˑ', '').replace('‍','').replace('en','ɛn'),
+        ipa['again'][0][1].replace('ˑ', '').replace('‍','')
     ]]
 
-ipa5     = [['ðˑə', 'ðˑiː']]
+
 ipa5_CMU = [[
-        ipa5[0][0],
-        ipa5[0][1].replace('ː','')
+        ipa['the'][0][0],
+        ipa['the'][0][1].replace('ː','')
     ]]
 
 words3 = "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted."
@@ -46,32 +48,28 @@ words3 = [w[1] for w in words3]
 class TestConversion_default(transcribe_fixtures.BaseConversion):
     @classmethod
     def setUpClass(self):
-        self.words1 = words1
-        self.cmu1_none = self.cmu1_spaces = self.cmu1 = cmu1
+        self.cmu = cmu
+        self.ipa = copy.deepcopy( ipa )
+        self.cmu1_none = self.cmu1_spaces = self.cmu['teacher']
         self.ipa1 = [['ˈtˑiˑʧˑəˑr']]
         self.ipa1_spaces = tk( self.ipa1, ' ')
         self.ipa1_none = tk( self.ipa1, '')
 
-        self.words2 = words2
-        self.cmu2 = cmu2
+        #self.cmu2 = cmu2
         self.ipa2 = [['ˈɑrdˌvɑrk']]
 
-        self.words4 = words4
         self.cmu4 = [['ah0 g eh1 n', 'ah0 g ey1 n']]
-        self.ipa4 = ipa4_CMU
+        self.ipa['again'] = ipa4_CMU
 
-        self.words5 = words5
         self.cmu5_none = self.cmu5_spaces = self.cmu5 = [['dh ah0', 'dh ah1', 'dh iy0']]
-        self.ipa5 = ipa5_CMU
-        self.ipa5_spaces = tk( self.ipa5, ' ')
-        self.ipa5_none = tk( self.ipa5, '')
+        self.ipa['the'] = ipa5_CMU
+        self.ipa5_spaces = tk( self.ipa['the'], ' ')
+        self.ipa5_none = tk( self.ipa['the'], '')
 
-        self.words6 = words6
         self.cmu6 = [['l aa1 k']]
         self.ipa6 = [['lɑk']]
         
         self.words = words
-        self.ipa = {}
         
         self.ipa['with'] = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
         self.ipa7c = 'wɪθ'
@@ -88,8 +86,6 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəli'
         self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
-        
-        self.words = words
         
         self.words3 = words3
 
@@ -109,33 +105,28 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
 class TestConversion_CMU(transcribe_fixtures.BaseConversion):
     @classmethod
     def setUpClass(self):
-        
-        self.words1 = words1
-        self.cmu1_none = self.cmu1_spaces = self.cmu1 = cmu1
+        self.cmu = cmu
+        self.ipa = copy.deepcopy( ipa )
+        self.cmu1_none = self.cmu1_spaces = self.cmu['teacher']
         self.ipa1 = [['ˈtiʧər']]
         self.ipa1_spaces = tk( self.ipa1, ' ')
         self.ipa1_none = tk( self.ipa1, '')
         
-        self.words2 = words2
-        self.cmu2 = cmu2
+        #self.cmu2 = cmu2
         self.ipa2 = [['ˈɑrdˌvɑrk']]
 
-        self.words4 = words4
         self.cmu4 = [['ah0 g eh1 n', 'ah0 g ey1 n']]
-        self.ipa4 = ipa4_CMU
+        self.ipa['again'] = ipa4_CMU
 
-        self.words5 = words5
         self.cmu5_none = self.cmu5_spaces = self.cmu5   = [['dh ah0', 'dh ah1', 'dh iy0']]
-        self.ipa5_none = self.ipa5_spaces = self.ipa5   = ipa5_CMU
-        self.ipa5_spaces = tk( self.ipa5, ' ')
-        self.ipa5_none = tk( self.ipa5, '')
+        self.ipa5_none = self.ipa5_spaces = self.ipa['the']   = ipa5_CMU
+        self.ipa5_spaces = tk( self.ipa['the'], ' ')
+        self.ipa5_none = tk( self.ipa['the'], '')
 
-        self.words6 = words6
         self.cmu6 = [['l aa1 k']]
         self.ipa6 = [['lɑk']]
         
         self.words = words
-        self.ipa = {}
         
         self.ipa['with'] = [['w ih1 dh', 'w ih1 th', 'w ih0 th', 'w ih0 dh']]
         self.ipa7c = 'wɪθ'
@@ -173,27 +164,23 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
     def setUpClass(self):
         self.maxDiff = None
         
-        self.words1 = words1
-        self.cmu1 = self.ipa1 = [['tˑˈiːˑt\u200dʃˑə']]
+        self.cmu = cmu
+        self.ipa = copy.deepcopy( ipa )
+        self.cmu['teacher'] = self.ipa1 = [['tˑˈiːˑt\u200dʃˑə']]
         self.ipa1_spaces = self.cmu1_spaces = tk( self.ipa1, ' ')
         self.ipa1_none = self.cmu1_none = tk( self.ipa1, '')
 
-        self.words2 = words2
-        self.cmu2 = self.ipa2 = [['ˈɑːdvɑːk']]
+        self.cmu['aardvark'] = self.ipa2 = [['ˈɑːdvɑːk']]
 
-        self.words4 = words4
-        self.cmu4 = self.ipa4 = [['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe\u200dɪˑn']]
+        self.cmu4 = self.ipa['again'] = [['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe\u200dɪˑn']]
 
-        self.words5 = words5
-        self.cmu5   = self.ipa5   = [['ðˑə', 'ðˑiː', 'ðˑˈiː']]
-        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
-        self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
+        self.cmu5   = self.ipa['the']   = [['ðˑə', 'ðˑiː', 'ðˑˈiː']]
+        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa['the'], ' ')
+        self.ipa5_none = self.cmu5_none = tk( self.ipa['the'], '')
 
-        self.words6 = words6
         self.cmu6 = self.ipa6 = [['lˈɒx']]
         
         self.words = words
-        self.ipa = {}
         
         self.ipa['with'] = [['w ˈɪ ð', 'w ɪ ð']]
         self.ipa7c = 'wɪð'
@@ -228,27 +215,23 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
     def setUpClass(self):
         self.maxDiff = None
         
-        self.words1 = words1
-        self.cmu1 = self.ipa1 = [['ˈtˑiːˑt‍ʃˑəˑr']]
+        self.cmu = cmu
+        self.ipa = copy.deepcopy( ipa )
+        self.cmu['teacher'] = self.ipa1 = [['ˈtˑiːˑt‍ʃˑəˑr']]
         self.ipa1_spaces = self.cmu1_spaces = tk( self.ipa1, ' ')
         self.ipa1_none = self.cmu1_none = tk( self.ipa1, '')
         
-        self.words2 = words2
-        self.cmu2 = self.ipa2 = [['ˈɒrdˌvɒrk']]
+        self.cmu['aardvark'] = self.ipa2 = [['ˈɒrdˌvɒrk']]
         
-        self.words4 = words4
-        self.cmu4 = self.ipa4 = ipa4
+        self.cmu4 = self.ipa['again']
 
-        self.words5 = words5
-        self.cmu5   = self.ipa5   = ipa5
-        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa5, ' ')
-        self.ipa5_none = self.cmu5_none = tk( self.ipa5, '')
+        self.cmu5   = self.ipa['the']
+        self.ipa5_spaces = self.cmu5_spaces = tk( self.ipa['the'], ' ')
+        self.ipa5_none = self.cmu5_none = tk( self.ipa['the'], '')
 
-        self.words6 = words6
         self.cmu6 = self.ipa6 = [['lɒk']]
         
         self.words = words
-        self.ipa = {}
         
         self.ipa['with'] = [['w ɪ ð', 'w ɪ θ']]
         self.ipa7c = 'wɪθ'

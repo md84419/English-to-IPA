@@ -11,32 +11,32 @@ class BaseConversion(unittest.TestCase):
 
     def test_get_cmu_teacher(self):
         transcribe.set_language( self.lang )
-        res1 = transcribe.get_entries(self.words1, db_type='sql', language=self.lang, token_marking='spaces')
-        res2 = transcribe.get_entries(self.words1, db_type='json', language=self.lang, token_marking='spaces')
+        res1 = transcribe.get_entries(self.words['teacher'], db_type='sql', language=self.lang, token_marking='spaces')
+        res2 = transcribe.get_entries(self.words['teacher'], db_type='json', language=self.lang, token_marking='spaces')
         self.assertEqual(res1, self.cmu1_spaces)
         self.assertEqual(res2, self.cmu1_spaces)
         self.assertEqual(res1, res2)
 
     def test_cmu_to_ipa_teacher(self):
         transcribe.set_language( self.lang )
-        res1 = transcribe.cmu_to_ipa( self.cmu1, stress_marking='both')
+        res1 = transcribe.cmu_to_ipa( self.cmu['teacher'], stress_marking='both')
         #self.assertEqual(res1, self.ipa1)
 
     def test_get_cmu_aardvark(self):
-        res1 = transcribe.get_entries(self.words2, db_type='sql', language=self.lang, token_marking='none')
-        res2 = transcribe.get_entries(self.words2, db_type='json', language=self.lang, token_marking='none')
-        self.assertEqual(res1, self.cmu2)
-        self.assertEqual(res2, self.cmu2)
+        res1 = transcribe.get_entries(self.words['aardvark'], db_type='sql', language=self.lang, token_marking='none')
+        res2 = transcribe.get_entries(self.words['aardvark'], db_type='json', language=self.lang, token_marking='none')
+        self.assertEqual(res1, self.cmu['aardvark'])
+        self.assertEqual(res2, self.cmu['aardvark'])
         self.assertEqual(res1, res2)
 
     def test_cmu_to_ipa_aardvark(self):
         transcribe.set_language( self.lang )
-        res1 = transcribe.cmu_to_ipa( self.cmu2, stress_marking='both')
+        res1 = transcribe.cmu_to_ipa( self.cmu['aardvark'], stress_marking='both')
         self.assertEqual(res1, self.ipa2)
 
     def test_get_cmu_again(self):
-        res1 = transcribe.get_entries(self.words4, db_type='sql', language=self.lang, token_marking='symbols')
-        res2 = transcribe.get_entries(self.words4, db_type='json', language=self.lang, token_marking='symbols')
+        res1 = transcribe.get_entries(self.words['again'], db_type='sql', language=self.lang, token_marking='symbols')
+        res2 = transcribe.get_entries(self.words['again'], db_type='json', language=self.lang, token_marking='symbols')
         self.assertEqual(res1, self.cmu4)
         self.assertEqual(res2, self.cmu4)
         self.assertEqual(res1, res2)
@@ -44,15 +44,15 @@ class BaseConversion(unittest.TestCase):
     def test_cmu_to_ipa_again(self):
         transcribe.set_language( self.lang )
         res1 = transcribe.cmu_to_ipa( self.cmu4, stress_marking='both', sorted_list=False)
-        self.assertEqual(res1, self.ipa4)
+        self.assertEqual(res1, self.ipa['again'])
 
     def test_get_cmu_the(self):
-        res1 = transcribe.get_entries(self.words5, db_type='sql', language=self.lang, token_marking='spaces')
-        res2 = transcribe.get_entries(self.words5, db_type='json', language=self.lang, token_marking='spaces')
-        res3 = transcribe.get_entries(self.words5, db_type='sql', language=self.lang, token_marking='none')
-        res4 = transcribe.get_entries(self.words5, db_type='json', language=self.lang, token_marking='none')
-        res5 = transcribe.get_entries(self.words5, db_type='sql', language=self.lang, token_marking='symbols')
-        res6 = transcribe.get_entries(self.words5, db_type='json', language=self.lang, token_marking='symbols')
+        res1 = transcribe.get_entries(self.words['the'], db_type='sql', language=self.lang, token_marking='spaces')
+        res2 = transcribe.get_entries(self.words['the'], db_type='json', language=self.lang, token_marking='spaces')
+        res3 = transcribe.get_entries(self.words['the'], db_type='sql', language=self.lang, token_marking='none')
+        res4 = transcribe.get_entries(self.words['the'], db_type='json', language=self.lang, token_marking='none')
+        res5 = transcribe.get_entries(self.words['the'], db_type='sql', language=self.lang, token_marking='symbols')
+        res6 = transcribe.get_entries(self.words['the'], db_type='json', language=self.lang, token_marking='symbols')
         self.assertEqual(res1, self.cmu5_spaces)
         self.assertEqual(res2, self.cmu5_spaces)
         self.assertEqual(res3, self.cmu5_none)
@@ -69,8 +69,8 @@ class BaseConversion(unittest.TestCase):
         self.assertEqual(res1, self.ipa5_none)
 
     def test_get_cmu_loch(self):
-        res1 = transcribe.get_entries(self.words6, db_type='sql', language=self.lang, token_marking='none')
-        res2 = transcribe.get_entries(self.words6, db_type='json', language=self.lang, token_marking='none')
+        res1 = transcribe.get_entries(self.words['loch'], db_type='sql', language=self.lang, token_marking='none')
+        res2 = transcribe.get_entries(self.words['loch'], db_type='json', language=self.lang, token_marking='none')
         self.assertEqual(res1, self.cmu6)
         self.assertEqual(res2, self.cmu6)
         self.assertEqual(res1, res2)
