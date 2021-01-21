@@ -14,18 +14,14 @@ words2 = "aardvark".split()
 words4 = "again".split()
 words5 = "the".split()
 words6 = "loch".split()
-words['with']  = "with".split()
-words['uk']    = "uk".split()
-words['gb']    = "gb".split()
-words['sewer'] = "sewer".split()
-words['years'] = "years".split()
-words['robotica'] = "robotica".split()
-words['be'] = "be".split()
-words['will'] = "will".split()
-words['to'] = "to".split()
-words['for'] = "for".split()
-words['can'] = "can".split()
-words['visually'] = "visually".split()
+
+words = {'with':'', 'uk':'', 'gb':'', 'sewer':'', 'years':'', 'robotica':'', 'be':'', 'will':'', 'to':'', 'for':'', 'can':'', 'visually':'', 'tv':''}
+for key in words:
+    #print ('key: ' + key)
+    #print ('oldval: ' + words[key])
+    words[key] = key.split()
+
+
 
 cmu1   = [['t iy1 ch er0']]
 cmu2   = [['aa1 r d v aa2 r k']]
@@ -91,6 +87,7 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['for'] = 'frər'
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəli'
+        self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
         
         self.words = words
         
@@ -154,6 +151,7 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['for'] = 'frər'
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəli'
+        self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
         
         self.words3 = words3
 
@@ -211,6 +209,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['for'] = 'fˈɔː'
         self.ipa['can'] = 'kˈæn'
         self.ipa['visually'] = 'vɪʒəliː'
+        self.ipa['tv'] = 'ˈtiːˈviː'
         
         self.words3 = words3
 
@@ -265,6 +264,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['for'] = 'frər'
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəliː'
+        self.ipa['tv'] = 'ˌteləˈvɪʒən'
 
         self.words3 = words3
 
