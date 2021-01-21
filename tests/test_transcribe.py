@@ -185,7 +185,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['to'] = 'tˈuː'
         self.ipa['for'] = 'fˈɔː'
         self.ipa['can'] = 'kˈæn'
-        self.ipa['visually'] = 'vɪʒəliː'
+        self.ipa['visually'] = 'vˈɪʒəˈliː'
         self.ipa['tv'] = 'ˈtiːˈviː'
         self.ipa['and'] = 'ˈænd'
         
