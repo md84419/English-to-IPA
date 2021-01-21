@@ -20,7 +20,7 @@ class BaseConversion(unittest.TestCase):
     def test_cmu_to_ipa_teacher(self):
         transcribe.set_language( self.lang )
         res1 = transcribe.cmu_to_ipa( self.cmu['teacher'], stress_marking='both')
-        #self.assertEqual(res1, self.ipa1)
+        #self.assertEqual(res1, self.ipa['teacher'])
 
     def test_get_cmu_aardvark(self):
         res1 = transcribe.get_entries(self.words['aardvark'], db_type='sql', language=self.lang, token_marking='none')
@@ -32,7 +32,7 @@ class BaseConversion(unittest.TestCase):
     def test_cmu_to_ipa_aardvark(self):
         transcribe.set_language( self.lang )
         res1 = transcribe.cmu_to_ipa( self.cmu['aardvark'], stress_marking='both')
-        self.assertEqual(res1, self.ipa2)
+        self.assertEqual(res1, self.ipa['aardvark'])
 
     def test_get_cmu_again(self):
         res1 = transcribe.get_entries(self.words['again'], db_type='sql', language=self.lang, token_marking='symbols')
@@ -78,7 +78,7 @@ class BaseConversion(unittest.TestCase):
     def test_cmu_to_ipa_loch(self):
         transcribe.set_language( self.lang )
         res1 = transcribe.cmu_to_ipa( self.cmu6, stress_marking='both')
-        self.assertEqual(res1, self.ipa6)
+        self.assertEqual(res1, self.ipa['loch'])
 
     def test_get_cmu_panagram(self):
         res1 = transcribe.get_entries(self.words3, db_type='sql', language=self.lang, token_marking='spaces')
