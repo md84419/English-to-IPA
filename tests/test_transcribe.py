@@ -72,6 +72,7 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəli'
         self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
+        self.ipa['and'] = 'ænd'
 
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -127,6 +128,7 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəli'
         self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
+        self.ipa['and'] = 'ænd'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -185,6 +187,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['can'] = 'kˈæn'
         self.ipa['visually'] = 'vɪʒəliː'
         self.ipa['tv'] = 'ˈtiːˈviː'
+        self.ipa['and'] = 'ˈænd'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']
@@ -236,6 +239,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['can'] = 'kən'
         self.ipa['visually'] = 'ˈvɪʒwəliː'
         self.ipa['tv'] = 'ˌteləˈvɪʒən'
+        self.ipa['and'] = 'ænd'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']

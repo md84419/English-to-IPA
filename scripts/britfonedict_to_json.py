@@ -116,14 +116,18 @@ def fix_britfone(source):
 
 # fix whole words
 def fix_britfone_words( dct ):
+  # change
   dct.update({"loch": ["lˑˈɒˑx"]})
-  dct.update({"uk": ["jˑuːˑkˑe‍ɪ"]})
-  dct.update({"gb": ["d‍ʒˑiːˑbˑiː"]})
   dct.update({"sewer": ["sˑˈʊ‍ə"]})
+  # remove
   dct.pop('croissant', None)
   dct.pop('with(2)', None)
   dct.pop('with(4)', None)
   dct.pop('years(2)', None)
+  # add
+  dct.update({"and(0)": ["nˑd"]})
+  dct.update({"uk": ["jˑuːˑkˑe‍ɪ"]})
+  dct.update({"gb": ["d‍ʒˑiːˑbˑiː"]})
   dct.update({"years'": ["jˑˈɪ‍əˑz"]})
   dct.update({"years-old": ["jˑˈɪ‍əˑzˑɔːˑlˑd"]})
   dct.update({'light-years': ["ˈlˑa‍ɪˑˌtˑjˑˈɪ‍əˑz"]})
