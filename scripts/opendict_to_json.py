@@ -143,6 +143,7 @@ def fix_opendict_words( dct ):
   dct.update({"croissant": ["kwæsɒŋ","kwæsɒn"]})
   dct.update({"croissants": ["kwæsɒŋs","kwæsɒns"]})
   dct.update({"bach": ["bˈɒx"]})
+  dct.update({"visually": ["vˈɪʒəˈliː"]})
 
 if( __name__ == "__main__"):
   main(sys.argv[1:])

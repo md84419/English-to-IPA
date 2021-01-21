@@ -188,5 +188,13 @@ class BaseConversion(unittest.TestCase):
         self.assertEqual( res2, self.ipa['can'] )
         self.assertEqual(res1, res2 )
         
+    def test_get_ipa_visually(self):
+        transcribe.set_language(self.lang)
+        res1 = transcribe.convert( self.words['visually'], language=self.lang, mode='sql', sorted_list=False )
+        res2 = transcribe.convert( self.words['visually'], language=self.lang, mode='json', sorted_list=False )
+        self.assertEqual( res1, self.ipa['visually'] )
+        self.assertEqual( res2, self.ipa['visually'] )
+        self.assertEqual(res1, res2 )
+        
 if __name__ == "__main__":
     unittest.main()
