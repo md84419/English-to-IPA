@@ -12,7 +12,7 @@ words = {
     'pangram': "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted.",
     'again':'', 'the':'', 'loch':'',
     'with':'', 'uk':'', 'gb':'', 'sewer':'', 'years':'', 'robotica':'', 'be':'', 'will':'', 'to':'', 'for':'', 'can':'', 'visually':'', 'tv':'',
-    'and':''
+    'and':'', 'aba':'', 'abalone':'', 'assistants':''
 }
 for key in words:
     if key == 'pangram':
@@ -73,6 +73,9 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['visually'] = 'ˈvɪʒwəli'
         self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
         self.ipa['and'] = 'ænd'
+        self.ipa['aba'] = 'ˌeɪˌbiˈeɪ'
+        self.ipa['abalone'] = 'ˌæbəˈloʊni'
+        self.ipa['assistants'] = 'əˈsɪstənts'
 
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -129,6 +132,9 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['visually'] = 'ˈvɪʒwəli'
         self.ipa['tv'] = 'ˌtɛləˈvɪʒən'
         self.ipa['and'] = 'ænd'
+        self.ipa['aba'] = 'ˌeɪˌbiˈeɪ'
+        self.ipa['abalone'] = 'ˌæbəˈloʊni'
+        self.ipa['assistants'] = 'əˈsɪstənts'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -188,6 +194,9 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['visually'] = 'vˈɪʒəˈliː'
         self.ipa['tv'] = 'ˈtiːˈviː'
         self.ipa['and'] = 'ˈænd'
+        self.ipa['aba'] = 'æbˈæ'
+        self.ipa['abalone'] = 'æbˈælə‍ʊn'
+        self.ipa['assistants'] = 'əsˈɪstənts'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']
@@ -240,6 +249,9 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['visually'] = 'ˈvɪʒwəliː'
         self.ipa['tv'] = 'ˌteləˈvɪʒən'
         self.ipa['and'] = 'ænd'
+        self.ipa['aba'] = 'ˌe‍ɪˌbiːˈe‍ɪ'
+        self.ipa['abalone'] = 'ˌæbəˈlə‍ʊniː'
+        self.ipa['assistants'] = 'əˈsɪstənts'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']

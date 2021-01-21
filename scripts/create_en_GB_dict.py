@@ -123,6 +123,21 @@ def fix_opendict(source):
   for key in open_dict_drop:
     if key in destination:
       destination.pop(key, None)
+  
+  for key1 in destination:
+    for key2 in range( len( destination[key1] )-1, -1, -1):
+      entry = destination[key1][key2]
+      # if the first vowel is '^'
+      found = re.match("[ɪeæʊʌɒəɑiuɜɔa]", entry )
+      if( not found):
+        continue
+      if( entry[found.span()[0]] != 'ʌ' ):
+        continue
+      newval = re.sub( 'ʌ', 'ə', entry, 1 )
+      if(newval in destination[key1]):
+        destination[key1].remove(newval)
+      destination[key1].append(newval)
+
   return destination
 
 
