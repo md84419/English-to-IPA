@@ -13,6 +13,7 @@ git add setup.py
 
 pip install 'setuptools>=41.0.1'
 pip install 'wheel==0.33.4'
+pip install twine
 
 
 python setup.py sdist bdist_wheel
