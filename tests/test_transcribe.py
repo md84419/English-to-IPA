@@ -12,7 +12,7 @@ words = {
     'pangram': "The beige hue on the waters of the loch impressed all, including the French queen, before she heard that symphony again, just as young Arthur wanted.",
     'again':'', 'the':'', 'loch':'',
     'with':'', 'uk':'', 'gb':'', 'sewer':'', 'years':'', 'robotica':'', 'be':'', 'will':'', 'to':'', 'for':'', 'can':'', 'visually':'', 'tv':'',
-    'and':'', 'aba':'', 'abalone':'', 'assistants':''
+    'and':'', 'aba':'', 'abalone':'', 'assistants':'', 'of':''
 }
 for key in words:
     if key == 'pangram':
@@ -76,6 +76,7 @@ class TestConversion_default(transcribe_fixtures.BaseConversion):
         self.ipa['aba'] = 'ˌeɪˌbiˈeɪ'
         self.ipa['abalone'] = 'ˌæbəˈloʊni'
         self.ipa['assistants'] = 'əˈsɪstənts'
+        self.ipa['of'] = 'əv'
 
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -135,6 +136,7 @@ class TestConversion_CMU(transcribe_fixtures.BaseConversion):
         self.ipa['aba'] = 'ˌeɪˌbiˈeɪ'
         self.ipa['abalone'] = 'ˌæbəˈloʊni'
         self.ipa['assistants'] = 'əˈsɪstənts'
+        self.ipa['of'] = 'əv'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['pangram'] = [['dh ah0', 'dh ah1', 'dh iy0'], ['b ey1 zh'], ['hh y uw1'], ['aa1 n', 'ao1 n'], ['dh ah0', 'dh ah1', 'dh iy0'],
@@ -173,7 +175,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa = copy.deepcopy( ipa )
         self.ipa['teacher'] = [['tˑˈiːˑt\u200dʃˑə']]
         self.ipa['aardvark'] = [['ˈɑːdvɑːk']]
-        self.ipa['pangram'] = [['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['bˑˈe‍ɪˑʒ'], ['hˑjˑˈuː'], ['ˈɒˑn'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['wˑˈɔːˑtˑəˑz'], ['ˈɒˑv', 'əˑv'],
+        self.ipa['pangram'] = [['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['bˑˈe‍ɪˑʒ'], ['hˑjˑˈuː'], ['ˈɒˑn'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['wˑˈɔːˑtˑəˑz'], ['əˑv','ˈɒˑv'],
             ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['lˑˈɒˑx'], ['ɪˑmˑpˑrˑˈeˑsˑt'], ['ˈɔːˑl'], ['ɪˑnˑkˑlˑˈuːˑdˑɪˑŋ'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['fˑrˑˈeˑnˑt\u200dʃ'],
             ['kˑwˑˈiːˑn'], ['bˑɪˑfˑˈɔː'], ['ʃˑˈiː'], ['hˑˈɜːˑd'], ['ðˑˈæˑt', 'ðˑəˑt'], ['sˑˈɪˑmˑfˑəˑnˑˌiː', 'sˑˈɪˑmˑfˑəˑnˑiː'],
             ['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe‍ɪˑn'], ['d\u200dʒˑˈʌˑsˑt', 'd\u200dʒˑəˑsˑt'], ['ˈæˑz', 'əˑz'],['jˑˈʌˑŋ'], ['ˈɑːˑθˑə'], ['wˑˈɒˑnˑtˑɪˑd']]
@@ -197,6 +199,7 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['aba'] = 'æbˈæ'
         self.ipa['abalone'] = 'æbˈælə‍ʊn'
         self.ipa['assistants'] = 'əsˈɪstənts'
+        self.ipa['of'] = 'ˈɒv'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']
@@ -252,6 +255,7 @@ class TestConversion_en_US(transcribe_fixtures.BaseConversion):
         self.ipa['aba'] = 'ˌe‍ɪˌbiːˈe‍ɪ'
         self.ipa['abalone'] = 'ˌæbəˈlə‍ʊniː'
         self.ipa['assistants'] = 'əˈsɪstənts'
+        self.ipa['of'] = 'əv'
         
         self.cmu = copy.deepcopy( cmu )
         self.cmu['teacher']  = self.ipa['teacher']

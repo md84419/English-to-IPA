@@ -6,3 +6,21 @@ dist/
 unstaged
 unstaged/
 *.egg-info/
+
+# local
+eng_to_ipa/resources/Britfone_source_files/britfone.symbols.3.0.1.txt.orig
+eng_to_ipa/resources/Britfone_source_files/britfone.symbols.3.0.1.txt.orig.sorted
+eng_to_ipa/resources/Opendict_source_files/opendict.symbols.txt.sorted
+eng_to_ipa/resources/a-er-words
+eng_to_ipa/resources/a-er-words.2
+eng_to_ipa/resources/a-er-words.3
+eng_to_ipa/resources/candidate-56.txt
+eng_to_ipa/resources/candidate-56.1.txt
+eng_to_ipa/.~c9_invoke_zvu8QV.py
+eng_to_ipa/resources/en_GB
+eng_to_ipa/resources/g
+eng_to_ipa/resources/keys-ending-a
+eng_to_ipa/resources/keys-ending-a.o
+eng_to_ipa/resources/mylist
+eng_to_ipa/resources/mylist2
+eng_to_ipa/resources/words-ending-a

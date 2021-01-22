@@ -227,13 +227,21 @@ class BaseConversion(unittest.TestCase):
         self.assertEqual( res1, self.ipa['abalone'] )
         self.assertEqual( res2, self.ipa['abalone'] )
         self.assertEqual(res1, res2 )
-        
+
     def test_get_ipa_assistants(self):
         transcribe.set_language(self.lang)
         res1 = transcribe.convert( self.words['assistants'], language=self.lang, mode='sql', sorted_list=False )
         res2 = transcribe.convert( self.words['assistants'], language=self.lang, mode='json', sorted_list=False )
         self.assertEqual( res1, self.ipa['assistants'] )
         self.assertEqual( res2, self.ipa['assistants'] )
+        self.assertEqual(res1, res2 )
+
+    def test_get_ipa_of(self):
+        transcribe.set_language(self.lang)
+        res1 = transcribe.convert( self.words['of'], language=self.lang, mode='sql', sorted_list=False )
+        res2 = transcribe.convert( self.words['of'], language=self.lang, mode='json', sorted_list=False )
+        self.assertEqual( res1, self.ipa['of'] )
+        self.assertEqual( res2, self.ipa['of'] )
         self.assertEqual(res1, res2 )
 
 if __name__ == "__main__":
