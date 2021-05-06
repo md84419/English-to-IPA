@@ -131,3 +131,4 @@ syllable counts if more than one word is provided in the input string.
 ### Other Resources
 
 For another Python package that offers support for rhyming and syllable counts (as well as other cool things), see [pronouncingpy](https://github.com/aparrish/pronouncingpy).
+Further dictionaries: https://github.com/Kyubyong/pron_dictionaries
