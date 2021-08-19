@@ -252,5 +252,9 @@ class BaseConversion(unittest.TestCase):
         self.assertEqual( res2, self.ipa['was'] )
         self.assertEqual(res1, res2 )
 
+    ### Matt's french testing
+    def test_Chic_IPA_FR_Equal_EN(self):
+        
+
 if __name__ == "__main__":
     unittest.main()
