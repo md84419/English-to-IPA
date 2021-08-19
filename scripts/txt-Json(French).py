@@ -16,9 +16,9 @@ import platform
 
 def findOS():
   global path_seperator
-  if platform.system() == 'Windows': #Windows (for me to develope the program)
+  if platform.system() == 'Windows':
       path_seperator = '\\'
-  elif platform.system() == 'Darwin': #MAC OS (for my end user to run the program)
+  elif platform.system() == 'Darwin':
       path_seperator = '/'
   elif platform.system() == 'Linux':
       path_seperator = '/'
@@ -106,11 +106,9 @@ for i in range(len(textLineList)):
     textDict[textLineDictStyleList[0]] = [(textLineDictStyleList[1])]
 
 for key in textDict:
-  print(textDict[key])
   for idx in range( len( textDict[key] ) ):
       textDict[key][idx] = fix_opendict( textDict[key][idx] )
       textDict[key][idx] = tokenize.tokenize( textDict[key][idx], 'ˑ', 'symbols' )
-  print(textDict[key])
 
 os.chdir(pathlib.Path(__file__).parent.absolute().parent.absolute())
 if platform.system() == 'Linux':
