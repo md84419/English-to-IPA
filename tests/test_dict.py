@@ -3,9 +3,13 @@
 # USAGE:
 # PYTHONPATH=".." python test_dict.py 
 
+from os import chdir, getcwd
+import pathlib
+from typing import Dict
 from eng_to_ipa import transcribe
 import json, re, sys, unittest
 from os.path import join, abspath, dirname
+import sqlite3
 
 class BaseConversion(object):
     
@@ -31,8 +35,28 @@ class BaseConversion(object):
             #pass
         self.assertEqual( {}, found, "unexpected symbol(s) in {} dictionary".format( self.dct ) )
 
+class TestFrench_English_Same():
 
-class TestConversion_UK(BaseConversion,unittest.TestCase):
+    def test_CocaCola_is_Same(self):
+        chdir(pathlib.Path(__file__).parent.absolute().parent.absolute())
+        dict_Path = '.\\eng_to_ipa\\resources'
+        frenchDict = 'fr_Open_Dict.json'
+        englishDict = 'Open-Dict.json'
+        chdir('.\\eng_to_ipa\\resources')
+        with open('fr_Open_Dict.json', 'r',encoding='UTF-8') as fp:
+            jsonText = json.load(fp)
+            jsonText = dict(jsonText)
+            frenchColaIPA = jsonText['coca-cola']
+
+        with open('open_Dict.json', 'r',encoding='UTF-8') as fp:
+            jsonText = json.load(fp)
+            jsonText = dict(jsonText)
+            englsihColaIPA = jsonText['coca-cola']
+
+        self.assertEqual(frenchColaIPA,englsihColaIPA)
+
+
+class TestConversion_UK(BaseConversion,TestFrench_English_Same,unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.dct = 'en_GB'
@@ -41,6 +65,9 @@ class TestConversion_UK(BaseConversion,unittest.TestCase):
                       'ɪ', 'e', 'æ', 'ʊ', 'ʌ', 'ɒ', 'ə',
                       'ɑː', 'iː', 'uː', 'ɜː', 'ɔː',
                       'e‍ɪ', 'a‍ɪ', 'ɔ‍ɪ', 'ɪ‍ə', 'e‍ə', 'ə‍ʊ', 'a‍ʊ', 'ʊ‍ə']
+
+
+
 
 # class TestConversion_US(BaseConversion,unittest.TestCase):
 #     @classmethod
@@ -72,3 +99,6 @@ class TestConversion_UK(BaseConversion,unittest.TestCase):
                         
 #         for key in sorted(found.keys()):
 #             print( key )
+
+if __name__ == "__main__":
+    unittest.main()

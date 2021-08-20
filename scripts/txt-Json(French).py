@@ -11,7 +11,7 @@ import tokenize
 import platform
 
 
-#This scripts run on linux (Ubuntu) not in a virtual environment 
+#This scripts run on linux (Ubuntu) due to the signal module from tokenize not being supported on windows
 #All the imports are the latest version of each
 
 def findOS():
@@ -103,8 +103,10 @@ text = f.read()
 textLineList = text.split('\n')
 for i in range(len(textLineList)):
     textLineDictStyleList = textLineList[i].split(',')
+    textLineDictStyleList[0] = str(textLineDictStyleList[0]).lower()
     textDict[textLineDictStyleList[0]] = [(textLineDictStyleList[1])]
 
+#FIXME: - dont thnk this is putting the ipa in the correct format
 for key in textDict:
   for idx in range( len( textDict[key] ) ):
       textDict[key][idx] = fix_opendict( textDict[key][idx] )

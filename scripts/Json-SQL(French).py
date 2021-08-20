@@ -9,14 +9,14 @@ import json
 
 def create_dictionary_table():
     try:
-        cursor.execute("""CREATE TABLE fr_ipa
-                    (word_id INTEGER PRIMARY KEY,
+        cursor.execute("""CREATE TABLE dictionary
+                    (id INTEGER PRIMARY KEY,
                     word text NOT NULL,
-                    ipa text NOT NULL
+                    phonemes text NOT NULL
                     )""")
         connection.commit()
     except sqlite3.OperationalError:
-        cursor.execute("DROP TABLE fr_ipa;")
+        cursor.execute("DROP TABLE dictionary;")
         connection.commit()
         create_dictionary_table()
 
@@ -36,6 +36,6 @@ cursor = connection.cursor()
 create_dictionary_table()
 for i in range(len(words)):
     listToAdd = [i+1,words[i],str(IPApronociation[i])]
-    cursor.execute('INSERT INTO fr_ipa (word_id,word,ipa) VALUES (?,?,?)',listToAdd)
+    cursor.execute('INSERT INTO dictionary (id,word,phonemes) VALUES (?,?,?)',listToAdd)
 connection.commit()
 connection.close()
