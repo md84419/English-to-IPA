@@ -11,10 +11,9 @@ git add setup.py
 
 
 
-pip install 'setuptools>=41.0.1'
-pip install 'wheel==0.33.4'
-pip install twine
+pip install -r requirements-dev.txt --upgrade
 
 
 python setup.py sdist bdist_wheel
-python -m twine upload --repository testpypi dist/English_to_IPA-0.3.0a14-py3-none-any.whl dist/English-to-IPA-0.3.0a14.tar.gz 
+#python -m twine upload --repository testpypi dist/English_to_IPA-0.3.0a14-py3-none-any.whl dist/English-to-IPA-0.3.0a14.tar.gz 
+python -m twine upload --repository robotica --repository-url http://admin:admin@pypi.robotica.ml/ dist/*

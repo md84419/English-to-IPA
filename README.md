@@ -8,8 +8,31 @@ This Python program utilizes the Carnegie-Mellon University Pronouncing Dictiona
 ### Installation ### 
 
 1. Download this directory locally 
-2. Run `python -m pip install .` in the same directory as ` setup.py`.
 
+
+### Setup virtual environment
+
+Create the virtual environment
+
+`python -m venv venv`
+
+Activate the the virtual environment
+
+Windows:
+
+`venv\scripts\activate`
+
+Mac/Linux:
+
+`source ./venv/bin/activate`
+
+### Install pre-requisites
+#### Make sure your venv environment is up to date:
+`python -m pip install --upgrade pip`  
+`python -m pip install --upgrade setuptools`
+
+Run `python -m pip install .` in the same directory as ` setup.py`.
+`pip install -r requirements.txt --upgrade`
 
 ### Running the tests ###
 `PYTHONPATH="tests" python -m unittest 2>&1`
