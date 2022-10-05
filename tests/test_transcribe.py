@@ -6,6 +6,8 @@
 from eng_to_ipa import transcribe
 import transcribe_fixtures
 import copy, sys
+import unittest
+
 
 words = {
     'teacher':'', 'aardvark':'',
@@ -179,8 +181,8 @@ class TestConversion_en_GB(transcribe_fixtures.BaseConversion):
         self.ipa['aardvark'] = [['ˈɑːdvɑːk']]
         self.ipa['pangram'] = [['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['bˑˈe‍ɪˑʒ'], ['hˑjˑˈuː'], ['ˈɒˑn'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['wˑˈɔːˑtˑəˑz'], ['əˑv','ˈɒˑv'],
             ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['lˑˈɒˑx'], ['ɪˑmˑpˑrˑˈeˑsˑt'], ['ˈɔːˑl'], ['ɪˑnˑkˑlˑˈuːˑdˑɪˑŋ'], ['ðˑə', 'ðˑiː', 'ðˑˈiː'], ['fˑrˑˈeˑnˑt\u200dʃ'],
-            ['kˑwˑˈiːˑn'], ['bˑɪˑfˑˈɔː'], ['ʃˑˈiː'], ['hˑˈɜːˑd'], ['ðˑˈæˑt', 'ðˑəˑt'], ['sˑˈɪˑmˑfˑəˑnˑˌiː', 'sˑˈɪˑmˑfˑəˑnˑiː'],
-            ['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe‍ɪˑn'], ['d\u200dʒˑˈʌˑsˑt', 'd\u200dʒˑəˑsˑt'], ['ˈæˑz', 'əˑz'],['jˑˈʌˑŋ'], ['ˈɑːˑθˑə'], ['wˑˈɒˑnˑtˑɪˑd']]
+            ['kˑwˑˈiːˑn'], ['bˑɪˑfˑˈɔː'], ['ʃˑˈiː'], ['hˑˈɜːˑd'], ['ðˑəˑt', 'ðˑˈæˑt'], ['sˑˈɪˑmˑfˑəˑnˑˌiː', 'sˑˈɪˑmˑfˑəˑnˑiː'],
+            ['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe‍ɪˑn'], ['d\u200dʒˑəˑsˑt', 'd\u200dʒˑˈʌˑsˑt'], ['ˈæˑz', 'əˑz'],['jˑˈʌˑŋ'], ['ˈɑːˑθˑə'], ['wˑˈɒˑnˑtˑɪˑd']]
         self.ipa['again'] = [['ʌˑgˑˈeˑn', 'əˑgˑˈeˑn', 'əˑgˑˈe\u200dɪˑn']]
         self.ipa['the']   = [['ðˑə', 'ðˑiː', 'ðˑˈiː']]
         self.ipa['loch'] = [['lˈɒx']]
@@ -291,5 +293,5 @@ def tk(arr, replace):
             newArr[i][j] = newArr[i][j].replace('ˑ', replace)
     return newArr
 
-#if __name__ == "__main__":
-#    unittest.main()
+if __name__ == "__main__":
+   unittest.main()
