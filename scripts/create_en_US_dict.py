@@ -4,10 +4,15 @@
 #  PYTHONPATH=".." python create_en_US_dict.py > ../eng_to_ipa/resources/en_US.json
 
 import json, logging, os, re, subprocess, sys
-from signal import signal, SIGPIPE, SIG_DFL
-from eng_to_ipa import transcribe, tokenize
 
-signal(SIGPIPE, SIG_DFL)
+try:
+  from signal import signal, SIGPIPE, SIG_DFL
+  signal(SIGPIPE, SIG_DFL)
+except ImportError:
+  # we're running on Windows oS
+  pass
+
+from eng_to_ipa import transcribe, tokenize
 
 logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger(__name__)

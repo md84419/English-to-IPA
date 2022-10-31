@@ -6,9 +6,12 @@
 #  PYTHONPATH=".." python create_en_GB_dict.py > ../eng_to_ipa/resources/en_GB.json
 
 import copy, json, logging, os, re, sys
-from signal import signal, SIGPIPE, SIG_DFL
-
-signal(SIGPIPE, SIG_DFL)
+try:
+  from signal import signal, SIGPIPE, SIG_DFL
+  signal(SIGPIPE, SIG_DFL)
+except ImportError:
+  # we're running on Windows oS
+  pass
 
 OPEN_DICT     = 'Open_dict.json'
 BRITFONE_DICT = 'Britfone_dict.json'

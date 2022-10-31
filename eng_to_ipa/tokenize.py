@@ -5,9 +5,13 @@
 #   @returns"ˈɑː d v ɑː k"
 
 import logging, subprocess, json, os
-from signal import signal, SIGPIPE, SIG_DFL
 
-signal(SIGPIPE, SIG_DFL)
+try:
+  from signal import signal, SIGPIPE, SIG_DFL
+  signal(SIGPIPE, SIG_DFL)
+except ImportError:
+  # we're running on Windows oS
+  pass
 
 logging.basicConfig(format='%(message)s', level=os.environ.get("LOGLEVEL", "INFO"))
 log = logging.getLogger(__name__)

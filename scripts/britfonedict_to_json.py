@@ -4,9 +4,12 @@
 #  PYTHONPATH=".." python opendict_to_json.py ../eng_to_ipa/resources/Opendict_source_files/en_UK.txt > ../eng_to_ipa/resources/Open_dict.json
 
 import csv, getopt, json, io, os, re, sys, subprocess
-from signal import signal, SIGPIPE, SIG_DFL
-
-signal(SIGPIPE, SIG_DFL)
+try:
+  from signal import signal, SIGPIPE, SIG_DFL
+  signal(SIGPIPE, SIG_DFL)
+except ImportError:
+  # we're running on Windows oS
+  pass
 
 
 def main(argv):
