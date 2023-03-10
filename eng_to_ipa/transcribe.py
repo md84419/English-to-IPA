@@ -167,7 +167,8 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
                 tmpresult = re.sub(r"([\-\.])(\d+)", lambda x: x.group(1) + num2words( int(x.group(2))), tmpresult )
                 tmpresult = get_entries(tmpresult.split(' '),
                                         db_type=db_type,
-                                        language=language
+                                        language=language,
+                                        token_marking=token_marking
                                         )
                 if( language == 'cmu' ):
                     # @TODO: @FIXME
@@ -182,7 +183,8 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
                 x = re.match(r"([a-z]+)(\d+)\Z", word)
                 tmpresult = get_entries([x.group(1), x.group(2)],
                                         db_type=db_type,
-                                        language=language
+                                        language=language,
+                                        token_marking=token_marking
                                         )
                 if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
                     this_word = []
@@ -196,7 +198,8 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
                 # we couldn't transliterate a hyphenated word - try word parts
                 tmpresult = get_entries(word.split('-'),
                                         db_type=db_type,
-                                        language=language
+                                        language=language,
+                                        token_marking=token_marking
                                         )
                 if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
                     this_word = []
