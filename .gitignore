@@ -7,6 +7,8 @@ unstaged
 unstaged/
 *.egg-info/
 venv/
+venv-windows/
+.vs
 
 # local
 eng_to_ipa/resources/Britfone_source_files/britfone.symbols.3.0.1.txt.orig

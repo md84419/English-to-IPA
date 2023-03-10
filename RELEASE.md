@@ -15,7 +15,7 @@ git add setup.py
 pip install -r requirements-dev.txt --upgrade
 
 
-rm -rf dist/*
+rm -rf dist/* build/*
 python setup.py sdist bdist_wheel
 #python -m twine upload --repository testpypi dist/*
 python -m twine upload --repository robotica --repository-url http://pypi.robotica.ml/ dist/*
