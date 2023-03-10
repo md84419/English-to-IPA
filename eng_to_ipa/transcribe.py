@@ -165,7 +165,10 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
                 tmpresult = re.sub(r"([\-\.])(0+\d+)", lambda x: x.group(1) + _phone( x.group(2)), tmpresult )
                 tmpresult = re.sub(r"(?<![\-\d])(\d+)", lambda x: num2words( int(x.group(1))), tmpresult )
                 tmpresult = re.sub(r"([\-\.])(\d+)", lambda x: x.group(1) + num2words( int(x.group(2))), tmpresult )
-                tmpresult = get_entries( tmpresult.split(' '), db_type=db_type, language=language )
+                tmpresult = get_entries(tmpresult.split(' '),
+                                        db_type=db_type,
+                                        language=language
+                                        )
                 if( language == 'cmu' ):
                     # @TODO: @FIXME
                     print('lang is cmu')
@@ -177,7 +180,10 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
             elif( re.match( r"([a-z]+)(\d+)\Z", word) ):
                 # try the letters and numbers seperately
                 x = re.match(r"([a-z]+)(\d+)\Z", word)
-                tmpresult = get_entries( [x.group(1), x.group(2)] , db_type=db_type, language=language )
+                tmpresult = get_entries([x.group(1), x.group(2)],
+                                        db_type=db_type,
+                                        language=language
+                                        )
                 if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
                     this_word = []
                     for this_word1 in tmpresult[0]:
@@ -188,7 +194,10 @@ def get_entries(tokens_in, db_type="sql", language='cmu', token_marking='none'):
                     ordered.append(["__IGNORE__" + word])
             elif( word.find('-') != -1 ):
                 # we couldn't transliterate a hyphenated word - try word parts
-                tmpresult = get_entries( word.split('-'), db_type=db_type, language=language )
+                tmpresult = get_entries(word.split('-'),
+                                        db_type=db_type,
+                                        language=language
+                                        )
                 if not tmpresult[0][0].startswith('__IGNORE__') and not tmpresult[1][0].startswith('__IGNORE__'):
                     this_word = []
                     for this_word1 in tmpresult[0]:
@@ -301,7 +310,11 @@ def ipa_list(words_in, keep_punct=True, stress_marks='both', db_type="sql", lang
     lang = Language(language)
     words = [preserve_punc(w.lower())[0] for w in words_in.split()] \
         if type(words_in) == str else [preserve_punc(w.lower())[0] for w in words_in]
-    dct = get_entries([w[1] for w in words], db_type=db_type, language=language, token_marking=token_marking)
+    dct = get_entries([w[1] for w in words],
+                      db_type=db_type,
+                      language=language,
+                      token_marking=token_marking
+                      )
     ipa = dict_to_ipa(dct, stress_marking=stress_marks, sorted_list=sorted_list)
     if language == 'cmu' and keep_punct:
         ipa = _punct_replace_word(words, ipa)
@@ -335,11 +348,25 @@ def contains(ipa, db_type="sql"):
 
 def convert(text, retrieve_all=False, keep_punct=True, stress_marks='both', mode="sql", language='cmu', sorted_list=True, token_marking='none'):
     """takes either a string or list of English words and converts them to IPA"""
-    ipa = ipa_list(words_in=text, keep_punct=keep_punct,
-                   stress_marks=stress_marks, db_type=mode, language=language, sorted_list=sorted_list, token_marking=token_marking)
+    ipa = ipa_list(words_in=text,
+                   keep_punct=keep_punct,
+                   stress_marks=stress_marks,
+                   db_type=mode,
+                   language=language,
+                   sorted_list=sorted_list,
+                   token_marking=token_marking
+                   )
     return get_all(ipa) if retrieve_all else get_top(ipa)
 
 
 def jonvert(text, retrieve_all=False, keep_punct=True, stress_marks='both', language='cmu', sorted_list=True, token_marking='none'):
     """Forces use of JSON database for fetching phoneme data."""
-    return convert(text, retrieve_all, keep_punct, stress_marks, mode="json", language=language, sorted_list=sorted_list, token_marking=token_marking)
+    return convert(text,
+                   retrieve_all,
+                   keep_punct,
+                   stress_marks,
+                   mode="json",
+                   language=language,
+                   sorted_list=sorted_list,
+                   token_marking=token_marking
+                   )
