@@ -201,7 +201,7 @@ These are dictionary-classification questions, not glyph-design questions.
 - ReadWells restores the distinctions that Read collapsed.
 
 ### Wells ###
-- Davian uses Wells' solution for vowels and extends the same philosophy to consonants.
+- ReadWells uses Wells' solution for vowels and extends the same philosophy to consonants.
 
 ### Other notable works ###
 The idea is similar to:
@@ -217,15 +217,15 @@ The idea is similar to:
 ## Current Working Hypothesis ##
 
 The working assumption is:
-- Every ordinary English word can be assigned a unique Davian spelling using the current 55-category inventory.
+- Every ordinary English word can be assigned a unique ReadWells spelling using the current 55-category inventory.
 
 No obvious missing sound categories have been identified so far.
 
 The remaining work is:
 - Define all 55 glyphs.
 - Create category-assignment rules.
-- Build a canonical Davian dictionary.
-- Define accent-specific IPA mappings from Davian categories to pronunciations.
+- Build a canonical ReadWells dictionary.
+- Define accent-specific IPA mappings from ReadWells categories to pronunciations.
 
 ---
 
@@ -238,7 +238,7 @@ The remaining work is:
 <img width="2590" height="566" alt="image" src="https://github.com/user-attachments/assets/a64a7dd1-a696-400e-b075-86a4fb2148c4" />
 
 
-There are **55 Davian lexical categories**:
+There are **55 ReadWells lexical categories**:
 
 * **28 consonant categories**
 * **27 vowel categories**
