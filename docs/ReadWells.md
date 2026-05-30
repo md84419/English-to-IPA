@@ -235,6 +235,8 @@ The remaining work is:
 |   |   |   |   |   |   |   |   |      |      |   |   | ş    | z̧    | ç    | dz̧    |   |   |    |   |   |   |   | [wh] |   |      |    |    |     |       |      |     |       |      |      |       |       |        |      |      |         |      |       |       |        |       |      |        |       |       |       |      |       |       |        |
 |   |   |   |   |   |   |   |   |      |      |   |   | [sh] | [zh] | [ch] | [dzh] |   |   |    |   |   |   |   | [wh] |   |      |    |    |     |       |      |     |       |      |      |       |       |        |      |      |         |      |       |       |        |       |      |        |       |       |       |      |       |       |        |
 
+<img width="2590" height="566" alt="image" src="https://github.com/user-attachments/assets/a64a7dd1-a696-400e-b075-86a4fb2148c4" />
+
 
 There are **55 Davian lexical categories**:
 
